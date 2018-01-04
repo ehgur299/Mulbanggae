@@ -79,7 +79,7 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>215</x>
+                    <x>133</x>
                     <y>609</y>
                   </constraint>
                   <sourceConnections/>
@@ -316,10 +316,10 @@
                                         <columnName>CTGNAME</columnName>
                                         <logicalName>카테고리명</logicalName>
                                         <columnType class="net.java.amateras.db.dialect.ColumnType">
-                                          <name>INTEGER</name>
-                                          <logicalName>Integer</logicalName>
+                                          <name>VARCHAR2</name>
+                                          <logicalName>String</logicalName>
                                           <supportSize>true</supportSize>
-                                          <type>4</type>
+                                          <type>12</type>
                                         </columnType>
                                         <size>8</size>
                                         <notNull>true</notNull>
