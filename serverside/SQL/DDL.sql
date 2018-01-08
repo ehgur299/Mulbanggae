@@ -1,385 +1,286 @@
-/* 게시글 */
-CREATE TABLE Shop_Board (
-	bNum NUMBER NOT NULL, /* 게시물번호 */
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	bTitle NVARCHAR2(30) NOT NULL, /* 게시물제목 */
-	bContent NVARCHAR2(800) NOT NULL, /* 게시물내용 */
-	bPIC NVARCHAR2(255) NOT NULL, /* 게시물이미지 */
-	bRegdate DATE NOT NULL /* 게시날짜 */
+DROP TABLE Md_Category;
+DROP TABLE M_Category;
+DROP TABLE M_QNA_ANSWER;
+DROP TABLE M_QNA;
+DROP TABLE M_Rating;
+DROP TABLE M_Comment;
+DROP TABLE M_User;
+DROP TABLE M_Product;
+DROP TABLE M_Admin;
+
+/* 상품 */
+CREATE TABLE M_Product (
+	product_number NUMBER NOT NULL, /* 상품번호 */
+	product_title VARCHAR2(100) NOT NULL, /* 제목 */
+	product_name VARCHAR2(100) NOT NULL, /* 상품명 */
+	product_price NUMBER NOT NULL, /* 상품가격 */
+	product_content VARCHAR2(4000) NOT NULL, /* 상품설명 */
+	product_url VARCHAR2(255), /* 상품사진 */
+	product_date DATE, /* 등록날짜 */
+	c_id NUMBER, /* 대분류번호 */
+	d_id NUMBER /* 소분류번호 */
 );
 
-COMMENT ON TABLE Shop_Board IS '게시글';
-
-COMMENT ON COLUMN Shop_Board.bNum IS '게시물번호';
-
-COMMENT ON COLUMN Shop_Board.sNum IS '유저번호';
-
-COMMENT ON COLUMN Shop_Board.bTitle IS '게시물제목';
-
-COMMENT ON COLUMN Shop_Board.bContent IS '게시물내용';
-
-COMMENT ON COLUMN Shop_Board.bPIC IS '게시물이미지';
-
-COMMENT ON COLUMN Shop_Board.bRegdate IS '게시날짜';
-
-CREATE UNIQUE INDEX PK_Shop_Board
-	ON Shop_Board (
-		bNum ASC
+CREATE UNIQUE INDEX PK_M_Product
+	ON M_Product (
+		product_number ASC
 	);
 
-ALTER TABLE Shop_Board
+ALTER TABLE M_Product
 	ADD
-		CONSTRAINT PK_Shop_Board
+		CONSTRAINT PK_M_Product
 		PRIMARY KEY (
-			bNum
+			product_number
 		);
 
-/* 사용자 */
-CREATE TABLE Shop_User (
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	sID NVARCHAR2(20) NOT NULL, /* 유저아이디 */
-	sPWD NVARCHAR2(20) NOT NULL, /* 유저비밀번호 */
-	sGender NUMBER NOT NULL, /* 유저성별 */
-	sBirth NVARCHAR2(8) NOT NULL /* 유저생일 */
+/* 유저 */
+CREATE TABLE M_User (
+	user_number NUMBER NOT NULL, /* 유저번호 */
+	user_nickname VARCHAR2(32) NOT NULL, /* 유저별명 */
+	user_id VARCHAR2(60) NOT NULL, /* 유저ID */
+	user_pwd VARCHAR2(60) NOT NULL, /* 유저PWD */
+	user_gender NUMBER NOT NULL, /* 유저성별 */
+	user_birth DATE NOT NULL /* 유저생일 */
 );
 
-COMMENT ON TABLE Shop_User IS '사용자';
-
-COMMENT ON COLUMN Shop_User.sNum IS '유저번호';
-
-COMMENT ON COLUMN Shop_User.sID IS '유저아이디';
-
-COMMENT ON COLUMN Shop_User.sPWD IS '유저비밀번호';
-
-COMMENT ON COLUMN Shop_User.sGender IS '유저성별';
-
-COMMENT ON COLUMN Shop_User.sBirth IS '유저생일';
-
-CREATE UNIQUE INDEX PK_Shop_User
-	ON Shop_User (
-		sNum ASC
+CREATE UNIQUE INDEX PK_M_User
+	ON M_User (
+		user_number ASC
 	);
 
-ALTER TABLE Shop_User
+ALTER TABLE M_User
 	ADD
-		CONSTRAINT PK_Shop_User
+		CONSTRAINT PK_M_User
 		PRIMARY KEY (
-			sNum
+			user_number
 		);
-
-/* 카테고리 */
-CREATE TABLE SCategory (
-	ctgNum NUMBER NOT NULL, /* 카테고리번호 */
-	ctgName NVARCHAR2(8) NOT NULL /* 카테고리명 */
-);
-
-COMMENT ON TABLE SCategory IS '카테고리';
-
-COMMENT ON COLUMN SCategory.ctgNum IS '카테고리번호';
-
-COMMENT ON COLUMN SCategory.ctgName IS '카테고리명';
-
-CREATE UNIQUE INDEX PK_SCategory
-	ON SCategory (
-		ctgNum ASC
-	);
-
-ALTER TABLE SCategory
-	ADD
-		CONSTRAINT PK_SCategory
-		PRIMARY KEY (
-			ctgNum
-		);
-
-/* 게시글_카테고리 */
-CREATE TABLE B_Category (
-	bNum NUMBER NOT NULL, /* 게시물번호 */
-	ctgNum NUMBER NOT NULL /* 카테고리번호 */
-);
-
-COMMENT ON TABLE B_Category IS '게시글_카테고리';
-
-COMMENT ON COLUMN B_Category.bNum IS '게시물번호';
-
-COMMENT ON COLUMN B_Category.ctgNum IS '카테고리번호';
-
-CREATE UNIQUE INDEX PK_B_Category
-	ON B_Category (
-		bNum ASC
-	);
-
-ALTER TABLE B_Category
-	ADD
-		CONSTRAINT PK_B_Category
-		PRIMARY KEY (
-			bNum
-		);
-
-/* 게시글_댓글 */
-CREATE TABLE B_Comment (
-	bNum NUMBER NOT NULL, /* 게시물번호 */
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	cContent NVARCHAR2(100) NOT NULL, /* 댓글내용 */
-	cDate DATE NOT NULL /* 댓글날짜 */
-);
-
-COMMENT ON TABLE B_Comment IS '게시글_댓글';
-
-COMMENT ON COLUMN B_Comment.bNum IS '게시물번호';
-
-COMMENT ON COLUMN B_Comment.sNum IS '유저번호';
-
-COMMENT ON COLUMN B_Comment.cContent IS '댓글내용';
-
-COMMENT ON COLUMN B_Comment.cDate IS '댓글날짜';
-
-CREATE UNIQUE INDEX PK_B_Comment
-	ON B_Comment (
-		bNum ASC
-	);
-
-ALTER TABLE B_Comment
-	ADD
-		CONSTRAINT PK_B_Comment
-		PRIMARY KEY (
-			bNum
-		);
-
-/* 게시글_별점 */
-CREATE TABLE B_Rating (
-	bNum NUMBER NOT NULL, /* 게시물번호 */
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	rRating NUMBER NOT NULL /* 별점 */
-);
-
-COMMENT ON TABLE B_Rating IS '게시글_별점';
-
-COMMENT ON COLUMN B_Rating.bNum IS '게시물번호';
-
-COMMENT ON COLUMN B_Rating.sNum IS '유저번호';
-
-COMMENT ON COLUMN B_Rating.rRating IS '별점';
-
-CREATE UNIQUE INDEX PK_B_Rating
-	ON B_Rating (
-		bNum ASC
-	);
-
-ALTER TABLE B_Rating
-	ADD
-		CONSTRAINT PK_B_Rating
-		PRIMARY KEY (
-			bNum
-		);
-
-/* 사용자_열람횟수집계 */
-CREATE TABLE U_Favorites (
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	ctgNum NUMBER NOT NULL, /* 카테고리번호 */
-	ufCount NUMBER /* 본횟수 */
-);
-
-COMMENT ON TABLE U_Favorites IS '사용자_열람횟수집계';
-
-COMMENT ON COLUMN U_Favorites.sNum IS '유저번호';
-
-COMMENT ON COLUMN U_Favorites.ctgNum IS '카테고리번호';
-
-COMMENT ON COLUMN U_Favorites.ufCount IS '본횟수';
-
-CREATE UNIQUE INDEX PK_U_Favorites
-	ON U_Favorites (
-		sNum ASC
-	);
-
-ALTER TABLE U_Favorites
-	ADD
-		CONSTRAINT PK_U_Favorites
-		PRIMARY KEY (
-			sNum
-		);
-
-/* QnA_질문 */
-CREATE TABLE Qna_Question (
-	qNum NUMBER NOT NULL, /* 질문번호 */
-	sNum NUMBER NOT NULL, /* 유저번호 */
-	qTitle NVARCHAR2(30) NOT NULL, /* 질문제목 */
-	qContent NVARCHAR2(200) NOT NULL, /* 질문내용 */
-	qStatus NUMBER /* 답변상태 */
-);
-
-COMMENT ON TABLE Qna_Question IS 'QnA_질문';
-
-COMMENT ON COLUMN Qna_Question.qNum IS '질문번호';
-
-COMMENT ON COLUMN Qna_Question.sNum IS '유저번호';
-
-COMMENT ON COLUMN Qna_Question.qTitle IS '질문제목';
-
-COMMENT ON COLUMN Qna_Question.qContent IS '질문내용';
-
-COMMENT ON COLUMN Qna_Question.qStatus IS '답변상태';
-
-CREATE UNIQUE INDEX PK_Qna_Question
-	ON Qna_Question (
-		qNum ASC
-	);
-
-ALTER TABLE Qna_Question
-	ADD
-		CONSTRAINT PK_Qna_Question
-		PRIMARY KEY (
-			qNum
-		);
-
-/* QnA_답변 */
-CREATE TABLE Qna_answer (
-	qNum NUMBER NOT NULL, /* 질문번호 */
-	qaContent NVARCHAR2(200) NOT NULL, /* 답변내용 */
-	qaDate DATE NOT NULL /* 답변날짜 */
-);
-
-COMMENT ON TABLE Qna_answer IS 'QnA_답변';
-
-COMMENT ON COLUMN Qna_answer.qNum IS '질문번호';
-
-COMMENT ON COLUMN Qna_answer.qaContent IS '답변내용';
-
-COMMENT ON COLUMN Qna_answer.qaDate IS '답변날짜';
 
 /* 관리자 */
-CREATE TABLE Admin (
-	aNum NUMBER NOT NULL, /* 관리자번호 */
-	aID NVARCHAR2(20) NOT NULL, /* 관리자아이디 */
-	aPWD NVARCHAR2(20) NOT NULL /* 관리자비밀번호 */
+CREATE TABLE M_Admin (
+	admin_number NUMBER NOT NULL, /* 관리자번호 */
+	admin_id VARCHAR2(60) NOT NULL, /* 관리자ID */
+	admin_pwd VARCHAR2(60) NOT NULL /* 관리자PWD */
 );
 
-COMMENT ON TABLE Admin IS '관리자';
-
-COMMENT ON COLUMN Admin.aNum IS '관리자번호';
-
-COMMENT ON COLUMN Admin.aID IS '관리자아이디';
-
-COMMENT ON COLUMN Admin.aPWD IS '관리자비밀번호';
-
-CREATE UNIQUE INDEX PK_Admin
-	ON Admin (
-		aNum ASC
+CREATE UNIQUE INDEX PK_M_Admin
+	ON M_Admin (
+		admin_number ASC
 	);
 
-ALTER TABLE Admin
+ALTER TABLE M_Admin
 	ADD
-		CONSTRAINT PK_Admin
+		CONSTRAINT PK_M_Admin
 		PRIMARY KEY (
-			aNum
+			admin_number
 		);
 
-ALTER TABLE Shop_Board
+/* 질문 */
+CREATE TABLE M_QNA (
+	qna_number NUMBER NOT NULL, /* 질문번호 */
+	user_number NUMBER NOT NULL, /* 유저번호 */
+	qna_title VARCHAR2(100), /* 질문제목 */
+	qna_content VARCHAR2(4000), /* 질문내용 */
+	qna_date DATE /* 질문등록일 */
+);
+
+CREATE UNIQUE INDEX PK_M_QNA
+	ON M_QNA (
+		qna_number ASC
+	);
+
+ALTER TABLE M_QNA
 	ADD
-		CONSTRAINT FK_Shop_User_TO_Shop_Board
-		FOREIGN KEY (
-			sNum
-		)
-		REFERENCES Shop_User (
-			sNum
+		CONSTRAINT PK_M_QNA
+		PRIMARY KEY (
+			qna_number
 		);
 
-ALTER TABLE B_Category
+/* 답변 */
+CREATE TABLE M_QNA_ANSWER (
+	answer_id NUMBER NOT NULL, /* 답변번호 */
+	qna_number NUMBER NOT NULL, /* 질문번호 */
+	answer_content VARCHAR2(4000) NOT NULL, /* 답변내용 */
+	answer_date DATE /* 답변등록일 */
+);
+
+CREATE UNIQUE INDEX PK_M_QNA_ANSWER
+	ON M_QNA_ANSWER (
+		answer_id ASC
+	);
+
+ALTER TABLE M_QNA_ANSWER
 	ADD
-		CONSTRAINT FK_Shop_Board_TO_B_Category
-		FOREIGN KEY (
-			bNum
-		)
-		REFERENCES Shop_Board (
-			bNum
+		CONSTRAINT PK_M_QNA_ANSWER
+		PRIMARY KEY (
+			answer_id
 		);
 
-ALTER TABLE B_Category
+/* 댓글 */
+CREATE TABLE M_Comment (
+	cmt_number NUMBER NOT NULL, /* 댓글번호 */
+	product_number NUMBER NOT NULL, /* 상품번호 */
+	user_number NUMBER NOT NULL, /* 유저번호 */
+	cmt_content VARCHAR2(400) NOT NULL, /* 댓글내용 */
+	cmt_date DATE /* 댓글등록일 */
+);
+
+CREATE UNIQUE INDEX PK_M_Comment
+	ON M_Comment (
+		cmt_number ASC
+	);
+
+ALTER TABLE M_Comment
 	ADD
-		CONSTRAINT FK_SCategory_TO_B_Category
-		FOREIGN KEY (
-			ctgNum
-		)
-		REFERENCES SCategory (
-			ctgNum
+		CONSTRAINT PK_M_Comment
+		PRIMARY KEY (
+			cmt_number
 		);
 
-ALTER TABLE B_Comment
+/* 대분류_카테고리 */
+CREATE TABLE M_Category (
+	c_id NUMBER NOT NULL, /* 대분류번호 */
+	c_name VARCHAR2(20) NOT NULL /* 대분류명 */
+);
+
+CREATE UNIQUE INDEX PK_M_Category
+	ON M_Category (
+		c_id ASC
+	);
+
+ALTER TABLE M_Category
 	ADD
-		CONSTRAINT FK_Shop_Board_TO_B_Comment
-		FOREIGN KEY (
-			bNum
-		)
-		REFERENCES Shop_Board (
-			bNum
+		CONSTRAINT PK_M_Category
+		PRIMARY KEY (
+			c_id
 		);
 
-ALTER TABLE B_Comment
+/* 별점 */
+CREATE TABLE M_Rating (
+	r_number NUMBER NOT NULL, /* 별점번호 */
+	user_r_get NUMBER NOT NULL, /* 별점받은유저 */
+	user_r_give NUMBER NOT NULL, /* 별점준유저 */
+	r_score NUMBER NOT NULL, /* 별점 */
+	r_content VARCHAR2(400) NOT NULL, /* 별점내용 */
+	r_date DATE /* 별점등록일 */
+);
+
+CREATE UNIQUE INDEX PK_M_Rating
+	ON M_Rating (
+		r_number ASC
+	);
+
+ALTER TABLE M_Rating
 	ADD
-		CONSTRAINT FK_Shop_User_TO_B_Comment
-		FOREIGN KEY (
-			sNum
-		)
-		REFERENCES Shop_User (
-			sNum
+		CONSTRAINT PK_M_Rating
+		PRIMARY KEY (
+			r_number
 		);
 
-ALTER TABLE B_Rating
+/* 소분류_카테고리 */
+CREATE TABLE Md_Category (
+	d_id NUMBER NOT NULL, /* 소분류번호 */
+	d_name VARCHAR2(40) NOT NULL, /* 소분류명 */
+	c_id NUMBER NOT NULL /* 대분류번호 */
+);
+
+CREATE UNIQUE INDEX PK_Md_Category
+	ON Md_Category (
+		d_id ASC
+	);
+
+ALTER TABLE Md_Category
 	ADD
-		CONSTRAINT FK_Shop_Board_TO_B_Rating
-		FOREIGN KEY (
-			bNum
-		)
-		REFERENCES Shop_Board (
-			bNum
+		CONSTRAINT PK_Md_Category
+		PRIMARY KEY (
+			d_id
 		);
 
-ALTER TABLE B_Rating
+ALTER TABLE M_Product
 	ADD
-		CONSTRAINT FK_Shop_User_TO_B_Rating
+		CONSTRAINT FK_M_Category_TO_M_Product
 		FOREIGN KEY (
-			sNum
+			c_id
 		)
-		REFERENCES Shop_User (
-			sNum
+		REFERENCES M_Category (
+			c_id
 		);
 
-ALTER TABLE U_Favorites
+ALTER TABLE M_Product
 	ADD
-		CONSTRAINT FK_Shop_User_TO_U_Favorites
+		CONSTRAINT FK_Md_Category_TO_M_Product
 		FOREIGN KEY (
-			sNum
+			d_id
 		)
-		REFERENCES Shop_User (
-			sNum
+		REFERENCES Md_Category (
+			d_id
 		);
 
-ALTER TABLE U_Favorites
+ALTER TABLE M_QNA
 	ADD
-		CONSTRAINT FK_SCategory_TO_U_Favorites
+		CONSTRAINT FK_M_User_TO_M_QNA
 		FOREIGN KEY (
-			ctgNum
+			user_number
 		)
-		REFERENCES SCategory (
-			ctgNum
+		REFERENCES M_User (
+			user_number
 		);
 
-ALTER TABLE Qna_Question
+ALTER TABLE M_QNA_ANSWER
 	ADD
-		CONSTRAINT FK_Shop_User_TO_Qna_Question
+		CONSTRAINT FK_M_QNA_TO_M_QNA_ANSWER
 		FOREIGN KEY (
-			sNum
+			qna_number
 		)
-		REFERENCES Shop_User (
-			sNum
+		REFERENCES M_QNA (
+			qna_number
 		);
 
-ALTER TABLE Qna_answer
+ALTER TABLE M_Comment
 	ADD
-		CONSTRAINT FK_Qna_Question_TO_Qna_answer
+		CONSTRAINT FK_M_User_TO_M_Comment
 		FOREIGN KEY (
-			qNum
+			user_number
 		)
-		REFERENCES Qna_Question (
-			qNum
+		REFERENCES M_User (
+			user_number
+		);
+
+ALTER TABLE M_Comment
+	ADD
+		CONSTRAINT FK_M_Product_TO_M_Comment
+		FOREIGN KEY (
+			product_number
+		)
+		REFERENCES M_Product (
+			product_number
+		);
+
+ALTER TABLE M_Rating
+	ADD
+		CONSTRAINT FK_M_User_TO_M_Rating
+		FOREIGN KEY (
+			user_r_get
+		)
+		REFERENCES M_User (
+			user_number
+		);
+
+ALTER TABLE M_Rating
+	ADD
+		CONSTRAINT FK_M_User_TO_M_Rating2
+		FOREIGN KEY (
+			user_r_give
+		)
+		REFERENCES M_User (
+			user_number
+		);
+
+ALTER TABLE Md_Category
+	ADD
+		CONSTRAINT FK_M_Category_TO_Md_Category
+		FOREIGN KEY (
+			c_id
+		)
+		REFERENCES M_Category (
+			c_id
 		);
