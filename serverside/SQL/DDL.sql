@@ -195,6 +195,30 @@ ALTER TABLE Md_Category
 			d_id
 		);
 
+/* 유저타입 */
+CREATE TABLE MT_User (
+	type_id NUMBER NOT NULL, /* 타입ID */
+	type_name VARCHAR2(30) /* 타입명 */
+);
+
+CREATE UNIQUE INDEX PK_MT_User
+	ON MT_User (
+		type_id ASC
+	);
+
+ALTER TABLE MT_User
+	ADD
+		CONSTRAINT PK_MT_User
+		PRIMARY KEY (
+			type_id
+		);
+
+/* 유저소유타입 */
+CREATE TABLE MIT_User (
+	user_number NUMBER, /* 유저번호 */
+	type_id NUMBER /* 타입ID */
+);
+
 ALTER TABLE M_Product
 	ADD
 		CONSTRAINT FK_M_Category_TO_M_Product
@@ -283,4 +307,24 @@ ALTER TABLE Md_Category
 		)
 		REFERENCES M_Category (
 			c_id
+		);
+
+ALTER TABLE MIT_User
+	ADD
+		CONSTRAINT FK_M_User_TO_MIT_User
+		FOREIGN KEY (
+			user_number
+		)
+		REFERENCES M_User (
+			user_number
+		);
+
+ALTER TABLE MIT_User
+	ADD
+		CONSTRAINT FK_MT_User_TO_MIT_User
+		FOREIGN KEY (
+			type_id
+		)
+		REFERENCES MT_User (
+			type_id
 		);
