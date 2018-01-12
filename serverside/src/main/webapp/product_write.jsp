@@ -26,40 +26,41 @@
 				</ul>
 			</nav>
 		</div>
-		<hr>
-
-		<h1>공지사항</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>132</td>
-					<td>안녕하세요.</td>
-					<td>홍길동</td>
-					<td>2017.01.21</td>
-				</tr>
-			</tbody>
-		</table>
 
 		<hr />
-		<a class="btn btn-default">글쓰기</a>
 
-		<div class="text-center">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
+		<h1>상품 등록</h1>
+		<form id="form1" name="form1" enctype="multipart/form-data"
+			method="post">
+			<table class="table table-bordered">
+				<tr>
+					<td>제목</td>
+					<td><input type="text" name="productTitle" id="productTitle"></td>
+				</tr>
+				<tr>
+					<td>상품명</td>
+					<td><input type="text" name="productName" id="productName"></td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<td><input type="text" name="productPrice" id="productPrice"></td>
+				</tr>
+				<tr>
+					<td>상품설명</td>
+					<td><textarea rows="5" cols="60" name="productDesc"
+							id="productDesc"></textarea></td>
+				</tr>
+				<tr>
+					<td>상품이미지</td>
+					<td><input type="file" name="productPhoto" id="productPhoto"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="button" value="등록"
+						id="addBtn"> <input type="button" value="목록" id="listBtn">
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

@@ -28,13 +28,14 @@
 		</div>
 		<hr>
 
-		<h1>공지사항</h1>
+		<h1>상품목록</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th>상품번호</th>
+					<th>상품사진</th>
 					<th>제목</th>
-					<th>작성자</th>
+					<th>상품명</th>
 					<th>날짜</th>
 				</tr>
 			</thead>
@@ -49,7 +50,7 @@
 		</table>
 
 		<hr />
-		<a class="btn btn-default">글쓰기</a>
+		<a class="btn btn-default">상품 등록</a>
 
 		<div class="text-center">
 			<ul class="pagination">
