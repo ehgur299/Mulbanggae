@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.ctglist ul li {
+	line-height: 30px;
+}
+
+.hdbox {
+    position: relative;
+    height: 41px;
+    padding-top: 13px;
+    border-bottom: 1px solid #ededed;
+    background: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}

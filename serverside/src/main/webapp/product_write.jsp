@@ -17,6 +17,7 @@
 				<a class="btn btn-default">로그인</a> 
 				<a class="btn btn-default">마이페이지</a>
 				<a class="btn btn-default">로그아웃</a>
+				
 			</div>
 			<nav>
 				<ul class="nav nav-justified">

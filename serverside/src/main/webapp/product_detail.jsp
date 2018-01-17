@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="css/ctg.css">
 <title>물방개</title>
 </head>
 <body>
@@ -31,52 +30,7 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
-				<div class="hdbox">대분류 카테고리</div>
-				<div class="ctglist">
-					<ul>
-						<li><a href="">소분류 카테고리</a></li>
-
-						<li><a href="">소분류 카테고리</a></li>
-					</ul>
-
-				</div>
-				
-				<hr/>
-				
-				<h1>상품목록</h1>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>상품번호</th>
-							<th>상품사진</th>
-							<th>제목</th>
-							<th>상품명</th>
-							<th>날짜</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>132</td>
-							<td>사진</td>
-							<td>안녕하세요.</td>
-							<td>홍길동</td>
-							<td>2017.01.21</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<hr />
-				<a class="btn btn-default">상품 등록</a>
-
-				<div class="text-center">
-					<ul class="pagination">
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-					</ul>
-				</div>
+			
 				<!-- /.col-lg-4 -->
 			</div>
 			<!--/row-->
