@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<context:component-scan base-package="com.koitt" />
+	<context:component-scan base-package="com.mul" />
 
 	<!-- 페이지를 관리하는 viewResolver bean 객체 생성 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,7 +25,7 @@
 		<property name="converters">
 			<list>
 				<bean id="roleToUserType"
-					class="com.koitt.util.RoleToUserTypeConverter" />
+					class="com.mul.util.RoleToUserTypeConverter" />
 			</list>
 		</property>
 	</bean>
