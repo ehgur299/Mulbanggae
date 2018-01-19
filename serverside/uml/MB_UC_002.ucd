@@ -107,9 +107,9 @@
                   </listeners>
                   <constraint>
                     <height>40</height>
-                    <width>100</width>
-                    <x>181</x>
-                    <y>241</y>
+                    <width>150</width>
+                    <x>164</x>
+                    <y>240</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.uml.usecasediagram.model.UsecaseRelationModel>
@@ -131,7 +131,7 @@
                   <targetConnections/>
                   <children/>
                   <filterProperty/>
-                  <name>공지사항 작성</name>
+                  <name>공지사항 작성 및 관리</name>
                 </net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                 <net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                   <backgroundColor>
@@ -158,8 +158,8 @@
                   <constraint>
                     <height>40</height>
                     <width>100</width>
-                    <x>123</x>
-                    <y>12</y>
+                    <x>167</x>
+                    <y>96</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.uml.usecasediagram.model.UsecaseRelationModel>
@@ -259,8 +259,8 @@
                   <constraint>
                     <height>40</height>
                     <width>100</width>
-                    <x>178</x>
-                    <y>333</y>
+                    <x>167</x>
+                    <y>322</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
@@ -309,8 +309,8 @@
                   <constraint>
                     <height>40</height>
                     <width>100</width>
-                    <x>173</x>
-                    <y>418</y>
+                    <x>166</x>
+                    <y>402</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
@@ -350,8 +350,8 @@
             <constraint>
               <height>40</height>
               <width>100</width>
-              <x>146</x>
-              <y>83</y>
+              <x>166</x>
+              <y>28</y>
             </constraint>
             <sourceConnections/>
             <targetConnections>
