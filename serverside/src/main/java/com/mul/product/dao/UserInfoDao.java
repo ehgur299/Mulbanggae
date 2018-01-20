@@ -21,6 +21,6 @@ public interface UserInfoDao {
 	
 	public void update(UserInfo user) throws CommonException;
 	
-	public UserInfo SelectByNickname(String nickname) throws CommonException;
+	public UserInfo SelectById(String id) throws CommonException;
 	
 }
