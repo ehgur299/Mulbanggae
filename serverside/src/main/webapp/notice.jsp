@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,12 +40,14 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach items="${ notice }" var="item">
 				<tr>
-					<td>132</td>
-					<td>안녕하세요.</td>
-					<td>홍길동</td>
-					<td>2017.01.21</td>
+					<td><a href="<c:url value='/notice/notice-detail.do?no=${ item.no }'/>">${ item.no }</a></td>
+					<td>${ item.title }</td>
+					<td>${ item.userInfo.nickname }</td>
+					<td>${ item.date }</td>
 				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 

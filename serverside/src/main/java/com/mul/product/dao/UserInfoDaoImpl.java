@@ -54,7 +54,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public void insert(UserInfo user) throws CommonException {
+	public void insert(UserInfo user) {
 		try {
 			sqlSession.insert(MAPPER_NAMESPACE + ".insert", user); 
 
@@ -111,11 +111,11 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public UserInfo SelectByNickname(String nickname) throws CommonException {
+	public UserInfo SelectById(String id) throws CommonException {
 		UserInfo userInfo = null;
 
 		try {
-			userInfo = sqlSession.selectOne(MAPPER_NAMESPACE + ".selectByNickname", nickname);
+			userInfo = sqlSession.selectOne(MAPPER_NAMESPACE + ".selectById", id);
 
 		} catch (Exception e) {
 			e.printStackTrace();
