@@ -55,7 +55,7 @@
 		<form-login login-page="/login"
 					login-processing-url="/login-processing"
 					authentication-failure-url="/login?action=error"
-					username-parameter="email"
+					username-parameter="id"
 					password-parameter="password" />
 		<access-denied-handler error-page="/access-denied" />
 		<csrf />
