@@ -2,19 +2,19 @@ package com.mul.product.model;
 
 import java.util.Date;
 
-public class Product 
-{
-	public Product() {}
-	
+public class Product {
+	public Product() {
+	}
+
 	public Product(Integer no, String title, String name, String price, String content, String uri, Date date,
-			Integer user_no, Integer m_ctg, Integer md_ctg) {
+			String user_no, String m_ctg, String md_ctg) {
 		super();
 		this.no = no;
 		this.title = title;
 		this.name = name;
 		this.price = price;
 		this.content = content;
-		this.uri = uri;
+		this.url = uri;
 		this.date = date;
 		this.user_no = user_no;
 		this.m_ctg = m_ctg;
@@ -26,97 +26,101 @@ public class Product
 	private String name;
 	private String price;
 	private String content;
-	private String uri;
+	private String url;
 	private Date date;
-	
-	private Integer user_no;
-	private Integer m_ctg;
-	private Integer md_ctg;
-	
+
+	private String user_no;
+	private String m_ctg;
+	private String md_ctg;
+
 	public Integer getNo() {
 		return no;
 	}
-
-
 
 	public void setNo(Integer no) {
 		this.no = no;
 	}
 
-
-
-	public Integer getM_ctg() {
+	public String getM_ctg() {
 		return m_ctg;
 	}
 
-
-
-	public void setM_ctg(Integer m_ctg) {
+	public void setM_ctg(String m_ctg) {
 		this.m_ctg = m_ctg;
 	}
 
-
-
-	public Integer getMd_ctg() {
+	public String getMd_ctg() {
 		return md_ctg;
 	}
 
-
-
-	public void setMd_ctg(Integer md_ctg) {
+	public void setMd_ctg(String md_ctg) {
 		this.md_ctg = md_ctg;
 	}
 
-
-
-	public Integer getUser_no() {
+	public String getUser_no() {
 		return user_no;
 	}
-	public void setUser_no(Integer user_no) {
+
+	public void setUser_no(String user_no) {
 		this.user_no = user_no;
 	}
+
 	public Integer getNumber() {
 		return no;
 	}
+
 	public void setNumber(Integer number) {
 		this.no = number;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPrice() {
 		return price;
 	}
+
 	public void setPrice(String price) {
 		this.price = price;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getUri() {
-		return uri;
+
+	public String getUrl() {
+		return url;
 	}
-	public void setUri(String uri) {
-		this.uri = uri;
+
+	public void setUrl(String uri) {
+		this.url = uri;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -131,7 +135,7 @@ public class Product
 		builder.append(", content=");
 		builder.append(content);
 		builder.append(", uri=");
-		builder.append(uri);
+		builder.append(url);
 		builder.append(", date=");
 		builder.append(date);
 		builder.append(", user_no=");
@@ -139,6 +143,7 @@ public class Product
 		builder.append("]");
 		return builder.toString();
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -149,9 +154,10 @@ public class Product
 		result = prime * result + ((no == null) ? 0 : no.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -191,12 +197,12 @@ public class Product
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
-		if (uri == null) {
-			if (other.uri != null)
+		if (url == null) {
+			if (other.url != null)
 				return false;
-		} else if (!uri.equals(other.uri))
+		} else if (!url.equals(other.url))
 			return false;
 		return true;
 	}
-	
+
 }

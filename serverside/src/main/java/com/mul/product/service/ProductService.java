@@ -14,7 +14,9 @@ public interface ProductService
 	
 	public int count();
 	
-	public void modify(Product product);
+	public String modify(Product product);
 	
-	public void delete(Integer no);
+	public String delete(Integer no);
+	
+	public boolean isProductMatced(Integer no, String password);
 }

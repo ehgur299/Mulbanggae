@@ -27,4 +27,5 @@ public interface UserInfoService {
 	
 	// 사용자의 id 값을 이용하여 비밀번호를 불러온 다음, 입력한 비밀번호와 비교
 	boolean isPasswordMatched(String id, String rawPassword) throws CommonException;
+	
 }

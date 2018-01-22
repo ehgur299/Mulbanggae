@@ -12,7 +12,7 @@
 	<context:component-scan base-package="com.mul" />
 	<!-- http element는 선언 된 순서대로 추가되므로 가장 구체적인 패턴을 먼저 선언 -->
 	<!-- Basic Authentication (use-expressions 사용하지 않는 경우)-->
-	<http pattern="/rest/**" realm="MY_TEST_REALM" 
+	<http pattern="/rest/**" realm="MulBanggae_REALM" 
 		create-session="stateless" use-expressions="false">
 		<http-basic 
 			entry-point-ref="customBasicAuthenticationEntryPoint"/>
@@ -20,7 +20,7 @@
 			 method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/rest/user"  
 			 method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-		<intercept-url pattern="/rest/board/attachment/**"
+		<intercept-url pattern="/rest/product/url/**"
 			 method="GET" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/rest/**"
 			access="ROLE_ADMIN, ROLE_USER"/>
@@ -50,7 +50,6 @@
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
-		<intercept-url pattern="/board/**" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')"/>
 
 		<form-login login-page="/login"
 					login-processing-url="/login-processing"

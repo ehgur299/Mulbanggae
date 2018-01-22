@@ -158,7 +158,7 @@ public class NoticeWebController {
 			String password)
 					throws CommonException, UnsupportedEncodingException {
 		
-		boolean isMatched = userInfoService.isProductMatched(Integer.parseInt(no), password);
+		boolean isMatched = userInfoService.isNoticeMatched(Integer.parseInt(no), password);
 		if (!isMatched) {
 			return "redirect:/notice/notice-remove.do?no=" + no + "&action=error-password";
 		}
@@ -197,7 +197,7 @@ public class NoticeWebController {
 					throws CommonException, Exception {
 		
 		// 비밀번호를 비교해서 같지 않다면 오류메시지 출력
-		boolean isMatched = userInfoService.isProductMatched(no, password);
+		boolean isMatched = userInfoService.isNoticeMatched(no, password);
 		if (!isMatched) {
 			return "redirect:/notice/notice-modify.do?no=" + no + "&action=error-password";
 		}
