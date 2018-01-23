@@ -8,39 +8,6 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <title>물방개</title>
-<script type="text/javascript">
-	function chkword(obj, maxByte) {
-
-		var strValue = obj.value;
-		var strLen = strValue.length;
-		var totalByte = 0;
-		var len = 0;
-		var oneChar = "";
-		var str2 = "";
-
-		for (var i = 0; i < strLen; i++) {
-			oneChar = strValue.charAt(i);
-			if (escape(oneChar).length > 4) {
-				totalByte += 2;
-			} else {
-				totalByte++;
-			}
-
-			// 입력한 문자 길이보다 넘치면 잘라내기 위해 저장
-			if (totalByte <= maxByte) {
-				len = i + 1;
-			}
-		}
-
-		// 넘어가는 글자는 자른다.
-		if (totalByte > maxByte) {
-			alert(maxByte + "자를 초과 입력 할 수 없습니다.");
-			str2 = strValue.substr(0, len);
-			obj.value = str2;
-			chkword(obj, 4000);
-		}
-	}
-</script>
 </head>
 <body>
 	<div class="container">
@@ -65,13 +32,12 @@
 		<h1>회원 가입</h1>
 		<form>
 			<div class="form-group">
-				<label for="userId">ID</label> <input class="form-control"
-					id="userId" placeholder="최대 30자" onkeyup="chkword(this, 30)">
+				<label for="ID">ID</label> <input 
+					class="form-control" maxlength="30" placeholder="최대 30자">
 			</div>
 			<div class="form-group">
-				<label for="userPassword">Password</label> <input
-					class="form-control" id="userPassword" placeholder="최대 30자"
-					onkeyup="chkword(this, 30)">
+				<label for="Password">Password</label> <input
+					class="form-control" maxlength="30" placeholder="최대 30자">
 			</div>
 			<div class="radio">
 				<label> <input type="radio" name="optionsRadios" id="male"
@@ -84,12 +50,25 @@
 				</label>
 			</div>
 			<div class="form-group">
-				<label for="userPassword">생년월일</label> <input type="number"
-					name="quantity" min="1900" max="2019">년 <input
-					type="number" name="quantity" min="1" max="13">월 <input
-					type="number" name="quantity" min="1" max="32">일
+				<input type="text" name="birthyy" maxlength="4" placeholder="년(4자)"
+					size="6"> <select name="birthmm">
+					<option value="">월</option>
+					<option value="01">1</option>
+					<option value="02">2</option>
+					<option value="03">3</option>
+					<option value="04">4</option>
+					<option value="05">5</option>
+					<option value="06">6</option>
+					<option value="07">7</option>
+					<option value="08">8</option>
+					<option value="09">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select> <input type="text" name="birthdd" maxlength="2" placeholder="일"
+					size="4">
 			</div>
-			<button type="submit" class="btn btn-default">제출</button>
+			<button type="submit" class="btn btn-default">회원가입</button>
 		</form>
 	</div>
 </body>
