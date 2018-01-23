@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper>
+  	<insert id="insert" parameterType="Comment">
+  		<selectKey keyProperty="cmt_no" resultType="Integer" order="BEFORE">
+  			SELECT comment_seq.NEXTVAL cmt_no FROM DUAL
+  		</selectKey>
+  		INSERT INTO M_Comment(cmt_number, product_number, user_number, cmt_content, cmt_date)
+  		VALUES(#{cmt_no}, #{product_no}, #{user_no}, #{cmt_content}, SYSDATE)
+  	</insert>
+  	
+  	<select id="select" parameterType="String" resultType="Comment">
+  	SELECT *
+  	FROM M_Comment
+  	WHERE cmt_number = #{cmt_no}
+  	</select>
+  
+  	<select id="selectAll" resultType="Comment">
+  	SELECT *
+  	FROM M_Comment
+  	ORDER BY cmt_Number DESC
+  	</select>
+  	
+  	<select id="count" resultType="Integer">
+  		SELECT count(*) FROM M_Comment
+  	</select>
+  
+  	<update id="update" parameterType="Comment">
+  		UPDATE M_Comment
+  		SET cmt_content= #{cmt_content}, cmt_date = SYSDATE
+  		WHERE cmt_number = #{cmt_no}, product_number = #{product_no}, user_number = #{user_no}
+  	</update>
+  	
+  	<delete id="delete" parameterType="Integer">
+  		DELETE FROM M_Comment WHRE cmt_number = #{cmt_no}
+  	</delete>
+  
+  
+  	<resultMap type="Comment" id="CommentResultMap">
+  	<id column="cmt_number" property="cmt_no"/>
+  	<result column="cmt_content" property="cmt_content"/>
+  	<result column="cmt_date" property="cmt_date"/>
+  	<result column="product_number" property="product_no"/>
+  	<result column="user_number" property="user_no"/>
+  	</resultMap>
+  </mapper>

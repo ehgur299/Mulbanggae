@@ -11,6 +11,10 @@ public interface ProductDao
 	
 	public Product select(Integer no) throws CommonException;
 	
+	public List<Product> selectByTitle(String title) throws CommonException;
+	
+	public List<Product> selectByPrice(int minPrice, int maxPrice) throws CommonException;
+	
 	public List<Product> selectAll() throws CommonException;
 	
 	public int productCount() throws CommonException;

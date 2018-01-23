@@ -28,6 +28,7 @@ import com.mul.product.service.ProductService;
 import com.mul.product.service.UserInfoService;
 
 @Controller
+@RequestMapping("/product")
 public class ProductWebController 
 {
 	private static final String UPLOAD_FOLDER = "/upload";
