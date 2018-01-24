@@ -21,7 +21,7 @@
 			</div>
 			<nav>
 				<ul class="nav nav-justified">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="http://192.168.0.19:8082/serverside/main.jsp">Home</a></li>
 					<li><a href="#">이용안내</a></li>
 					<li><a href="#">공지사항</a></li>
 				</ul>
