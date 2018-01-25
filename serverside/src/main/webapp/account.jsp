@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,14 +31,14 @@
 		<hr />
 
 		<h1>회원 가입</h1>
-		<form>
+		<form action='<c:url value='/join'/>' method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="ID">ID</label> <input 
-					class="form-control" maxlength="30" placeholder="최대 30자">
+					class="form-control" maxlength="30" placeholder="최대 30자" name="id">
 			</div>
 			<div class="form-group">
 				<label for="Password">Password</label> <input
-					class="form-control" maxlength="30" placeholder="최대 30자">
+					class="form-control" maxlength="30" placeholder="최대 30자" name="password">
 			</div>
 			<div class="radio">
 				<label> <input type="radio" name="optionsRadios" id="male"
@@ -50,23 +51,8 @@
 				</label>
 			</div>
 			<div class="form-group">
-				<input type="text" name="birthyy" maxlength="4" placeholder="년(4자)"
-					size="6"> <select name="birthmm">
-					<option value="">월</option>
-					<option value="01">1</option>
-					<option value="02">2</option>
-					<option value="03">3</option>
-					<option value="04">4</option>
-					<option value="05">5</option>
-					<option value="06">6</option>
-					<option value="07">7</option>
-					<option value="08">8</option>
-					<option value="09">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-				</select> <input type="text" name="birthdd" maxlength="2" placeholder="일"
-					size="4">
+				<input type="text" name="birthyy" maxlength="8" placeholder="생년월일 (8자)"
+					size="20">
 			</div>
 			<button type="submit" class="btn btn-default">회원가입</button>
 		</form>

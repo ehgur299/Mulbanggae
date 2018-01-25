@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.mul.product.model.CommonException;
 import com.mul.product.model.UserInfo;
 import com.mul.product.service.UserInfoService;
 
+@Controller
 public class UserWebController {
 
 	@Autowired
@@ -37,7 +39,7 @@ public class UserWebController {
 			model.addAttribute("userInfo", item);
 		}
 		
-		return "/main";
+		return "main";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
