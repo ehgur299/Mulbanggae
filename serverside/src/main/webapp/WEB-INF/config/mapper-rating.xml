@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.mul.product.dao.RatingDao">
+ 	
+ 	<insert id="insert" parameterType="Rating">
+ 		INSERT INTO M_Rating(r_number, user_r_get, user_r_give, r_score, r_content, r_date)
+ 		VALUES(rating_SEQ.NEXCVAL, #{ur_get_no}, #{ur_give_no}, #{r_score} , #{r_content}, SYSDATE)
+ 	</insert>
+ 	
+ 	<select id="select" parameterType="String">
+ 		SELECT * 
+ 		FROM M_Rating
+ 		WHERE r_number = #{ r_no}
+ 	</select>
+ 	
+ 	<select id="selectAll">
+ 		SELECT *
+ 		FROM M_Rating
+ 	</select>
+ 	
+ 	<select id="count">
+ 		SELECT count(*)
+ 		FROM M_Rating
+ 	</select>
+ 	
+ 	<update id="modify" parameterType="Rating">
+ 		UPDATE M_Rating
+ 		SET r_score = #{r_score}, r_content = #{r_content}, r_date = SYSDATE
+ 		WHERE r_number = #{r_no}
+ 	</update>
+	
+	<delete id="delete" parameterType = "String">
+		DELETE
+		FROM M_Rating
+		WHERE r_number = #{r_no}
+	</delete> 
+ 	<resultMap type="Rating" id="RatingResultMap">
+ 		<id property="r_no" column="r_number"/>
+ 		<result property="ur_get_no" column="user_r_get"/>
+ 		<result property="ur_give_no" column="user_r_give"/>
+ 		<result property="r_score" column="r_score"/>
+ 		<result property="r_content" column="r_content"/>
+ 		<result property="r_date" column="r_date"/>
+ 	</resultMap>
+ </mapper>

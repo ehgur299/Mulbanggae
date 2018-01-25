@@ -148,7 +148,7 @@ public class NoticeWebController {
 		
 		model.addAttribute("no", no);
 		
-		return "remove-confirm";
+		return "notice-remove";
 	}
 	
 	// 글 삭제 후, 글 목록 화면으로 이동

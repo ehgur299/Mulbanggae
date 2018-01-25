@@ -23,12 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mul.product.dao.ProductDao;
 import com.mul.product.model.CommonException;
 import com.mul.product.model.Product;
+import com.mul.product.model.UserInfo;
 import com.mul.product.service.FileService;
 import com.mul.product.service.ProductService;
 import com.mul.product.service.UserInfoService;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/product/*")
 public class ProductWebController 
 {
 	private static final String UPLOAD_FOLDER = "/upload";
@@ -42,7 +43,7 @@ public class ProductWebController
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@RequestMapping(value = "/product", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model)
 	{
 		List<Product> list = null;
@@ -53,7 +54,7 @@ public class ProductWebController
 		return "product";
 	}
 	
-	@RequestMapping(value = "/product-detail", method = RequestMethod.GET)
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(Model model, 
 			@RequestParam(value = "no", required=true)String no) throws CommonException,UnsupportedEncodingException
 	{
@@ -74,7 +75,7 @@ public class ProductWebController
 		return "product-detail";
 	}
 	
-	@RequestMapping( value="/product-write", method = RequestMethod.GET)
+	@RequestMapping( value="/write", method = RequestMethod.GET)
 	public String newProduct(Model model)
 	{
 		String id = this.getPrincipal();
@@ -86,9 +87,8 @@ public class ProductWebController
 		return "product-write";
 	}
 	
-	@RequestMapping( value="/product-write", method = RequestMethod.POST)
+	@RequestMapping( value="/write", method = RequestMethod.POST)
 	public String newProduct(HttpServletRequest request,
-			Integer no,
 			String title,
 			String name,
 			String price,
@@ -99,13 +99,16 @@ public class ProductWebController
 				throws CommonException, IllegalStateException, IOException
 		{
 			Product product = new Product();
-			product.setNo(no);
 			product.setTitle(title);
 			product.setName(name);
 			product.setContent(content);
 			product.setPrice(price);
 			product.setM_ctg(m_ctg);
 			product.setMd_ctg(md_ctg);
+			
+			String user_id = this.getPrincipal();
+			UserInfo userInfo = userInfoService.detail(user_id);
+			product.setUser_no(userInfo.getId());
 			
 			String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 			
@@ -133,10 +136,17 @@ public class ProductWebController
 			
 			productService.newProduct(product);
 			
-			return "redirect:/product";
+			return "redirect:/list";
 		}
+	@RequestMapping(value="/remove", method = RequestMethod.GET)
+	public String remove(Model model, @RequestParam(value = "no", required = true) String no)
+	{
+		model.addAttribute("no",no);
+		
+		return "remove";
+	}
 	
-	@RequestMapping(value="/product-remove", method = RequestMethod.POST)
+	@RequestMapping(value="/remove", method = RequestMethod.POST)
 	public String remove(HttpServletRequest request,
 						 @RequestParam(value = "no", required = true) String no,
 						 String password) throws CommonException, UnsupportedEncodingException
@@ -154,10 +164,10 @@ public class ProductWebController
 			}
 			
 			
-			return "redirect:/product";
+			return "redirect:/list";
 		}
 	
-	@RequestMapping(value="/product-modify", method = RequestMethod.GET)
+	@RequestMapping(value="/modify", method = RequestMethod.GET)
 	public String modify(Model model, @RequestParam(value = "no", required = true) String no)
 	{
 		Product item = null;
@@ -166,10 +176,10 @@ public class ProductWebController
 		
 		model.addAttribute("productitem",item);
 		
-		return "product-modify";
+		return "modify";
 	}
 	
-	@RequestMapping(value="/product-modify", method = RequestMethod.POST)
+	@RequestMapping(value="/modify", method = RequestMethod.POST)
 	public String modify(HttpServletRequest request,
 			int no,
 			String title,
@@ -184,7 +194,7 @@ public class ProductWebController
 		boolean isMatched = productService.isProductMatced(no, password);
 		if(!isMatched)
 		{
-			return "redirect:/product/product-modify.do?no=" + no + "&action=error-password";
+			return "redirect:/product/modify.do?no=" + no + "&action=error-password";
 		}
 		
 		Product product = new Product();
