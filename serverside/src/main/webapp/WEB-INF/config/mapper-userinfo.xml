@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mul.product.dao.UserInfoDaoImpl">
+
+	<select id="selectAll" resultType="UserInfo">
+		SELECT u.user_number as "UNUMBER", u.user_nickname, u.user_id, u.user_pwd, u.user_gender, u.user_birth, ut.ut_number, ut.ut_type
+		FROM user_info u,
+			(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
+			FROM user_info_type, user_type
+			WHERE user_type.ut_number = user_info_type.ut_number) ut
+		WHERE u.user_number = ut.user_number
+	</select>
+	
+	<resultMap type="UserInfo" id="userInfoResultMap">
+		<id property="no" column="user_number" />
+		<result property="nickname" column="user_nickname" />
+		<result property="id" column="user_id" />
+		<result property="pwd" column="user_pwd" />
+		<result property="gender" column="user_gender" />
+		<result property="birth" column="user_birth" />
+		<collection property="userType" ofType="UserType">
+			<id property="id" column="ut_number" />
+			<result property="type" column="ut_type"/>
+		</collection>
+	</resultMap>
+	
+	<select id="select" parameterType="Integer" resultMap="userInfoResultMap">
+		SELECT u.user_number as "UNUMBER", u.user_nickname, u.user_id, u.user_pwd, u.user_gender, u.user_birth, ut.ut_number, ut.ut_type
+		FROM user_info u,
+			(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
+			FROM user_info_type, user_type
+			WHERE user_type.ut_number = user_info_type.ut_number) ut
+		WHERE u.user_number = ut.user_number AND u.user_number = #{no}
+	</select>
+	
+	<insert id="insert" parameterType="UserInfo">
+		<selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+			SELECT user_info_seq.NEXTVAL id FROM DUAL
+		</selectKey>
+		INSERT INTO user_info (user_number, user_nickname, user_id, user_pwd, user_gender, user_birth)
+		VALUES (#{no}, #{nickname}, #{id}, #{pwd}, #{gender}, #{birth})
+	</insert>
+	
+	<insert id="insertUserTypes" parameterType="UserInfo">
+		INSERT ALL
+		<foreach collection="userType"  item="item">
+			INTO user_info_type(user_number, ut_number)
+			VALUES (#{no}, #{item.id})
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<delete id= "delete" parameterType = "Integer">
+		DELETE FROM user_info WHERE user_number = #{no}
+	</delete>
+	
+	<delete id= "deleteUserTypes" parameterType = "Integer">
+		DELETE FROM user_info_type WHERE user_number = #{no}
+	</delete>
+	
+	<update id="update" parameterType="UserInfo">
+		UPDATE user_info 
+		SET user_nickname = #{nickname}, user_pwd = #{pwd}
+		WHERE user_number = #{no}
+	</update>
+	
+	<select id="selectByID" parameterType="String" resultMap="userInfoResultMap">
+		SELECT u.user_number as "UNUMBER", u.user_nickname, u.user_id, u.user_pwd, u.user_gender, u.user_birth, ut.ut_number, ut.ut_type
+		FROM user_info u,
+			(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
+			FROM user_info_type, user_type
+			WHERE user_type.ut_number = user_info_type.ut_number) ut
+		WHERE u.user_number = ut.user_number AND u.user_id = #{id}
+	</select>
+</mapper>
