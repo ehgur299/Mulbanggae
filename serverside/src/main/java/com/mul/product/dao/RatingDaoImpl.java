@@ -25,9 +25,9 @@ public class RatingDaoImpl implements RatingDao
 	}
 
 	@Override
-	public void select(String no) throws CommonException {
+	public Rating select(String no) throws CommonException {
 		
-		sqlSession.selectOne(MAPPER_RATING + ".select", no);
+		return sqlSession.selectOne(MAPPER_RATING + ".select", no);
 	}
 
 	@Override

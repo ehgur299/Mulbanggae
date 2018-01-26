@@ -79,12 +79,12 @@ public class ProductWebController
 	public String newProduct(Model model)
 	{
 		String id = this.getPrincipal();
-		Product item = productService.detail(Integer.parseInt(id));
+		UserInfo item = userInfoService.detail(Integer.parseInt(id));
 		
-		model.addAttribute("productitem", item.getNo());
-		model.addAttribute("producttitle", item.getTitle());
+		model.addAttribute("no", item.getNo());
+		model.addAttribute("nickname", item.getNickname());
 		
-		return "product-write";
+		return "write";
 	}
 	
 	@RequestMapping( value="/write", method = RequestMethod.POST)

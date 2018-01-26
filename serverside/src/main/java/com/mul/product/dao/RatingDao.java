@@ -9,7 +9,7 @@ public interface RatingDao
 {
 	public void insert(Rating rating) throws CommonException;
 	
-	public void select(String no) throws CommonException;
+	public Rating select(String no) throws CommonException;
 	
 	public List<Rating> selectAll() throws CommonException;
 	
