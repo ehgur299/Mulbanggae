@@ -51,7 +51,7 @@
 				</label>
 			</div>
 			<div class="form-group">
-				<input type="text" name="birthyy" maxlength="8" placeholder="생년월일 (8자)"
+				<input type="text" name="birth" maxlength="8" placeholder="생년월일 (8자)"
 					size="20">
 			</div>
 			<button type="submit" class="btn btn-default">회원가입</button>

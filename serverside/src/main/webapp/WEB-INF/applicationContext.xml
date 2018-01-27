@@ -56,7 +56,7 @@
 					login-processing-url="/login-processing"
 					authentication-failure-url="/login?action=error"
 					username-parameter="id"
-					password-parameter="password" />
+					password-parameter="pwd" />
 		<access-denied-handler error-page="/access-denied" />
 		<csrf />
 	</http>
