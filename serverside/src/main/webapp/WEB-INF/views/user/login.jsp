@@ -17,12 +17,12 @@
 		<div class="masthead">
 			<h3>물건파는 방구석 개인들</h3>
 			<div class="text-right">
-				<a class="btn btn-primary">회원가입</a>
 				<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
+				<a href="<c:url value='/join'/>" class="btn btn-primary">회원가입</a>
 				<a href="<c:url value='/login'/>" class="btn btn-default">로그인</a> 
 				</sec:authorize>
-				<sec:authorize access="hasRole('ADMIN') and hasRole('USER')">
-				<a class="btn btn-default">마이페이지</a>
+				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
+				<a href="<c:url value='/user/mypage'/>" class="btn btn-default">마이페이지</a>
 				<a class="btn btn-default">로그아웃</a>
 				</sec:authorize>
 			</div>
@@ -43,6 +43,9 @@
 				<form action="<c:url value="/login-processing"/>" method="post" class="form-signin">
 					<c:if test="${ param.action == 'error' }">
 						<p>아이디 혹은 비밀번호를 잘못 입력하였습니다.</p>
+					</c:if>
+					<c:if test="${ param.action == 'logout' }">
+						<p>로그아웃 하였습니다.</p>
 					</c:if>
 					
 					<h2 class="form-signin-heading">Please sign in</h2>
