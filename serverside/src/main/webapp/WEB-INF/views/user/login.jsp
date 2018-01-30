@@ -30,7 +30,7 @@
 				<ul class="nav nav-justified">
 					<li class="active"><a href="<c:url value='/'/>">Home</a></li>
 					<li><a href="#">이용안내</a></li>
-					<li><a href="#">공지사항</a></li>
+					<li><a href="<c:url value='notice'/>">공지사항</a></li>
 				</ul>
 			</nav>
 		</div>

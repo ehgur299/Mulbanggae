@@ -53,6 +53,14 @@ public class NoticeWebController {
 	// 글 목록 화면
 	@RequestMapping(value = "/notice.do", method = RequestMethod.GET)
 	public String list(Model model) throws CommonException {
+		
+		UserInfo item = null;
+		
+		String id = this.getPrincipal();
+		item = userInfoService.detail(id);
+		
+		model.addAttribute("item", item);
+		
 		List<Notice> notice = null;
 		
 		notice = noticeService.list();
@@ -88,11 +96,12 @@ public class NoticeWebController {
 	@RequestMapping(value = "/notice-new.do", method = RequestMethod.GET)
 	public String newNotice(Model model) {
 		
-		String id = this.getPrincipal();
-		UserInfo item = userInfoService.detail(id);
+		UserInfo item = null;
 		
-		model.addAttribute("no", item.getNo());
-		model.addAttribute("nickname", item.getNickname());
+		String id = this.getPrincipal();
+		item = userInfoService.detail(id);
+		
+		model.addAttribute("item", item);
 		
 		return "notice-new";
 	}
@@ -107,7 +116,7 @@ public class NoticeWebController {
 					throws CommonException, Exception {
 		
 		Notice notice = new Notice();
-		notice.setNo(no);
+		notice.setUser_num(no);
 		notice.setTitle(title);
 		notice.setContent(content);
 		

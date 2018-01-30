@@ -9,6 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+<script type="text/javascript">
+	alert(${item});
+</script>
 <title>물방개</title>
 </head>
 <body>
@@ -30,49 +33,45 @@
 			</div>
 			<nav>
 				<ul class="nav nav-justified">
-					<li class="active"><a href="<c:url value='/'/>">Home</a></li>
+					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#">이용안내</a></li>
 					<li><a href="<c:url value='/notice/notice.do'/>">공지사항</a></li>
 				</ul>
 			</nav>
 		</div>
-		<hr>
-
-		<h1>공지사항</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${ notice }" var="notice">
-				<tr>
-					<td><a href="<c:url value='/notice/notice-detail.do?no=${ notice.no }'/>">${ notice.no }</a></td>
-					<td>${ notice.title }</td>
-					<td>${ notice.userInfo.nickname }</td>
-					<td>${ notice.date }</td>
-				</tr>
-			</c:forEach>
-			</tbody>
-		</table>
 
 		<hr />
-		<sec:authorize access="hasRole('ADMIN')">
-		<a href="<c:url value='/notice/notice-new.do'/>" class="btn btn-default">글쓰기</a>
-		</sec:authorize>
-		<div class="text-center">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
+
+		<h1>공지사항 작성</h1>
+		<form action="<c:url value='/notice/notice-new.do'/>" method="post" enctype="multipart/form-data">
+			<table class="table table-bordered">
+				<tr>
+					<td>작성자</td>
+					<td>${ item.nickname }(${ item.id })</td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" name="title" id="noticeTitle"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea rows="5" cols="60" name="content"
+							id="noticeContent"></textarea></td>
+				</tr>
+				<tr>
+					<td>이미지</td>
+					<td><input type="file" name="url" id="noticePhoto" multiple="multiple"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input name="no" value="${ item.no }">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<button type="submit" class="btn btn-default">등록</button>
+						<a href="<c:url value='/notice/notice.do'/>" type="button" class="btn btn-default">공지사항 목록으로 이동</a>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

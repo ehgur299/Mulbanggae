@@ -1,3 +1,6 @@
+SELECT * FROM user_info;
+SELECT * FROM notice;
+
 INSERT INTO user_type(ut_number, ut_type)
 VALUES (user_type_seq.NEXTVAL, 'ADMIN');
 
@@ -17,8 +20,6 @@ FROM user_info_type, user_type
 WHERE user_type.ut_number = user_info_type.ut_number) ut
 WHERE u.user_number = ut.user_number AND u.user_number = 25;
 
-SELECT * FROM user_info;
-
 INSERT INTO user_info_type(user_number, ut_number)
 VALUES (1, 1);
 
@@ -34,3 +35,17 @@ FROM user_info u,
 FROM user_info_type, user_type
 WHERE user_type.ut_number = user_info_type.ut_number) ut
 WHERE u.user_number = ut.user_number AND u.user_id = 'admin01';
+
+INSERT INTO notice (n_number, n_title, n_content, n_url, n_date, user_number)
+VALUES (notice_seq.NEXTVAL, '테스트입니다', '테스트입니다', NULL, SYSDATE, 1)
+
+SELECT n.n_number, n_title, n_content, n_url, n_date, u.user_nickname
+FROM notice n, user_info u
+WHERE n.user_number = u.user_number ORDER BY n.n_number DESC
+
+SELECT u.user_number as "UNUMBER", u.user_nickname, u.user_id, u.user_pwd, u.user_gender, u.user_birth, ut.ut_number, ut.ut_type
+FROM user_info u,
+(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
+FROM user_info_type, user_type
+WHERE user_type.ut_number = user_info_type.ut_number) ut
+WHERE u.user_number = ut.user_number AND u.user_number = 1;

@@ -14,7 +14,7 @@
 	</select>
 	
 	<resultMap type="UserInfo" id="userInfoResultMap">
-		<id property="no" column="user_number" />
+		<id property="no" column="UNUMBER" />
 		<result property="nickname" column="user_nickname" />
 		<result property="id" column="user_id" />
 		<result property="pwd" column="user_pwd" />
