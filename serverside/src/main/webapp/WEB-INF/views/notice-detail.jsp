@@ -17,7 +17,7 @@
 			<h3>물건파는 방구석 개인들</h3>
 			<div class="text-right">
 				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
-				<p>${ item.nickname }(${ item.id })님 안녕하세요!</p>
+				<p>${ item.userInfo.nickname }(${ item.userInfo.id })님 안녕하세요!</p>
 				</sec:authorize>
 				<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
 				<a href="<c:url value='/join'/>" class="btn btn-primary">회원가입</a>
@@ -42,28 +42,28 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
+					<th>번호: ${ item.no }</th>
+					<th>제목: ${ item.title }</th>
+					<th>작성자: ${ item.userInfo.nickname }</th>
+					<th>날짜: ${ item.date }</th>
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${ notice }" var="notice">
 				<tr>
-					<td>${ notice.no }</td>
-					<td><a href="<c:url value='/notice/notice-detail.do?no=${ notice.no }'/>">${ notice.title }</a></td>
-					<td>${ notice.userInfo.nickname }</td>
-					<td>${ notice.date }</td>
+					<td>${ item.content }</td>
 				</tr>
-			</c:forEach>
 			</tbody>
 		</table>
-
+		
 		<hr />
-		<sec:authorize access="hasRole('ADMIN')">
-		<a href="<c:url value='/notice/notice-new.do'/>" class="btn btn-default">글쓰기</a>
-		</sec:authorize>
+		
+		<div class="text-right">
+		<c:if test="${ !empty filename }">
+			<p>첨부파일</p>
+			<a href="<c:url value='/notice/download.do?filename=${ item.url }'/>">${ filename }</a>
+		</c:if>
+		</div>
+		
 		<div class="text-center">
 			<ul class="pagination">
 				<li><a href="#">1</a></li>
