@@ -22,6 +22,8 @@
 			 method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/rest/product/url/**"
 			 method="GET" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/rest/notice/url/**"
+			 method="GET" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/rest/**"
 			access="ROLE_ADMIN, ROLE_USER"/>
 		<intercept-url pattern="/rest/**"   

@@ -43,7 +43,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		UserInfo userInfo = null;
 		
 		try {
-			userInfo = sqlSession.selectOne(MAPPER_NAMESPACE + ".select", uid);
+			userInfo = sqlSession.selectOne(MAPPER_NAMESPACE + ".select", uid.toString());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

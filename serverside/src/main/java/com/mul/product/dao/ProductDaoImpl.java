@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mul.product.model.CommonException;
 import com.mul.product.model.Product;
 
 @Repository
@@ -53,6 +54,18 @@ public class ProductDaoImpl implements ProductDao
 	public void delete(Integer no) {
 		// TODO Auto-generated method stub
 		sqlSession.delete(MAPPER_PRODUCT + ".delete", no);
+	}
+
+	@Override
+	public List<Product> selectByTitle(String title) throws CommonException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> selectByPrice(int minPrice, int maxPrice) throws CommonException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

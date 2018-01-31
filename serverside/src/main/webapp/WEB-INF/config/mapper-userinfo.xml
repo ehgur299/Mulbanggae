@@ -14,7 +14,7 @@
 	</select>
 	
 	<resultMap type="UserInfo" id="userInfoResultMap">
-		<id property="no" column="user_number" />
+		<id property="no" column="UNUMBER" />
 		<result property="nickname" column="user_nickname" />
 		<result property="id" column="user_id" />
 		<result property="pwd" column="user_pwd" />
@@ -36,8 +36,8 @@
 	</select>
 	
 	<insert id="insert" parameterType="UserInfo">
-		<selectKey keyProperty="id" resultType="Integer" order="BEFORE">
-			SELECT user_info_seq.NEXTVAL id FROM DUAL
+		<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
+			SELECT user_info_seq.NEXTVAL no FROM DUAL
 		</selectKey>
 		INSERT INTO user_info (user_number, user_nickname, user_id, user_pwd, user_gender, user_birth)
 		VALUES (#{no}, #{nickname}, #{id}, #{pwd}, #{gender}, #{birth})

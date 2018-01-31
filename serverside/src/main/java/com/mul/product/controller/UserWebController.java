@@ -79,22 +79,34 @@ public class UserWebController {
 	public String newUser(HttpServletRequest request,
 			String id,
 			String pwd,
-			String nickname)
+			String nickname,
+			String gender,
+			String birth)
 				throws CommonException, Exception {
 		
 		UserInfo user = new UserInfo();
 		user.setId(id);
 		user.setPwd(pwd);
 		user.setNickname(nickname);
+		user.setGender(gender);
+		user.setBirth(birth);
 		
 		userInfoService.newUser(user);
 		
 		return "redirect:login";
 	}
 	
-	@RequestMapping(value = "/user/setting" , method = RequestMethod.GET)
-	public String setting() {
-		return "user/setting";
+	@RequestMapping(value = "/user/mypage" , method = RequestMethod.GET)
+	public String setting(Model model) {
+		
+		UserInfo item = null;
+		
+		String id = this.getPrincipal();
+		item = userInfoService.detail(id);
+		
+		model.addAttribute("item", item);
+		
+		return "user/mypage";
 	}
 
 	@RequestMapping(value = "/user/delete" , method = RequestMethod.GET)

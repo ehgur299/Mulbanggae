@@ -5,11 +5,11 @@
   <mapper namespace="com.mul.product.dao.NoticeDaoImpl">
   	
   	<insert id="insert" parameterType="Notice">
-  		<selectKey keyProperty="n_number" resultType="Integer" order="BEFORE">
+  		<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
   			SELECT notice_seq.NEXTVAL no FROM DUAL
   		</selectKey>
-  		INSERT INTO notice (n_number, n_title, n_content, n_url, n_date)
-  		VALUES (#{no}, #{title}, #{content}, #{url}, SYSDATE)
+  		INSERT INTO notice (n_number, n_title, n_content, n_url, n_date, user_number)
+  		VALUES (#{no}, #{title}, #{content}, #{url}, SYSDATE, #{user_num})
   	</insert>
   	
   	<resultMap type="Notice" id="noticeResultMap">
