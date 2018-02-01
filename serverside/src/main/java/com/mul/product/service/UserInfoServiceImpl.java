@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mul.product.dao.NoticeDao;
+import com.mul.product.dao.ProductDao;
 import com.mul.product.dao.UserInfoDao;
 import com.mul.product.model.CommonException;
 import com.mul.product.model.Notice;
+import com.mul.product.model.Product;
 import com.mul.product.model.UserInfo;
 import com.mul.product.model.UserType;
 import com.mul.product.model.UserTypeId;
@@ -25,6 +27,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	@Autowired
 	private UserInfoDao userInfoDao;
+	
+	@Autowired
+	private ProductDao productDao;
 	
 	@Autowired
 	private NoticeDao noticeDao;
@@ -131,5 +136,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 		userInfoDao.update(userInfo);
 
 		return oldFilename;
+	}
+
+	@Override
+	public boolean isProductMatched(Integer no, String rawPassword) throws CommonException {
+		/*
+		 *  게시물 번호를 이용하여 게시물을 가져온 뒤
+		 *  게시물의 작성자 id값을 획득한 후,
+		 *  획득한 id값으로 사용자 정보를 가져와
+		 *  해당 사용자의 비밀번호를 가져온다.
+		 */
+		Product product = productDao.select(no.toString());
+		UserInfo userInfo = userInfoDao.select(product.getNo());
+		
+		// 해당 사용자의 비밀번호와 입력한 비밀번호 비교한 결과 리턴
+		return encoder.matches(rawPassword, userInfo.getPwd());
 	}
 }

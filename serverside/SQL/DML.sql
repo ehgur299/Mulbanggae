@@ -49,3 +49,5 @@ FROM user_info u,
 FROM user_info_type, user_type
 WHERE user_type.ut_number = user_info_type.ut_number) ut
 WHERE u.user_number = ut.user_number AND u.user_number = 1;
+
+SELECT * FROM M_Product ORDER BY product_number DESC

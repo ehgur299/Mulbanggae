@@ -31,22 +31,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.mul.product.model.CommonException;
-import com.mul.product.model.Notice;
+import com.mul.product.model.Product;
 import com.mul.product.model.UserInfo;
 import com.mul.product.service.FileService;
-import com.mul.product.service.NoticeService;
+import com.mul.product.service.ProductService;
 import com.mul.product.service.UserInfoService;
 
 @RestController
 @RequestMapping("/rest")
-public class NoticeRestController {
+public class ProductRestController {
 
-	private static final String UPLOAD_FOLDER = "/notice";
+	private static final String UPLOAD_FOLDER = "/upload";
 
 	private Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private NoticeService noticeService;
+	private ProductService productService;
 
 	@Autowired
 	private UserInfoService userInfoService;
@@ -55,54 +55,54 @@ public class NoticeRestController {
 	private FileService fileService;
 
 	// 글 목록
-	@RequestMapping(value = "/notice", method = RequestMethod.GET, 
+	@RequestMapping(value = "/product", method = RequestMethod.GET, 
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, 
 					MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<Notice>> list() throws CommonException {
-		List<Notice> list = null;
+	public ResponseEntity<List<Product>> list() throws CommonException {
+		List<Product> list = null;
 
-		list = noticeService.list();
+		list = productService.list();
 		if (list != null && !list.isEmpty()) {
-			return new ResponseEntity<List<Notice>>(list, HttpStatus.OK);
+			return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<List<Notice>>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
 	}
 
 	// 글 상세보기
-	@RequestMapping(value = "/notice/{no}", method = RequestMethod.GET, 
+	@RequestMapping(value = "/product/{no}", method = RequestMethod.GET, 
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, 
 					MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Notice> detail(@PathVariable("no") String no,
+	public ResponseEntity<Product> detail(@PathVariable("no") String no,
 			UriComponentsBuilder ucBuilder)
 					throws CommonException, Exception {
 
-		Notice notice = null;
+		Product product = null;
 		String filename = null;
 
-		notice = noticeService.detail(no);
+		product = productService.detail(no);
 
-		if (notice != null && notice.getNo() > 0) {
-			filename = notice.getUrl();
+		if (product != null && product.getNo() > 0) {
+			filename = product.getUrl();
 			if (filename != null && !filename.trim().isEmpty()) {
 				filename = URLDecoder.decode(filename, "UTF-8");
-				notice.setUrl(filename);
+				product.setUrl(filename);
 			}
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(ucBuilder.path(
-					"/rest/notice/attachment/{attachment}")
-					.buildAndExpand(notice.getUrl())
+					"/rest/product/attachment/{attachment}")
+					.buildAndExpand(product.getUrl())
 					.toUri());
 
-			return new ResponseEntity<Notice>(notice, headers, HttpStatus.OK);
+			return new ResponseEntity<Product>(product, headers, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Notice>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 	}
 
 	// 파일 내려받기
-	@RequestMapping(value = "/notice/url/{url:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/product/url/{url:.+}", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, 
 			HttpServletResponse response, @PathVariable("url") String filename)
 					throws CommonException {
@@ -161,24 +161,33 @@ public class NoticeRestController {
 	}
 
 	// 글 추가
-	@RequestMapping(value = "/notice", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public ResponseEntity<Void> newBoard(HttpServletRequest request,
 			String id,
 			String nickname,
 			String title,
+			String productname,
+			String price,
 			String content,
 			Date date,
 			@RequestParam("url") MultipartFile attachment,
+			String m_ctg,
+			String md_ctg,
 			UriComponentsBuilder ucBuilder)
 					throws CommonException, Exception {
 
 		UserInfo item = userInfoService.detail(id);
 
-		Notice notice = new Notice();
-		notice.setUser_num(item.getNo());
-		notice.setTitle(title);
-		notice.setContent(content);
-		notice.setDate(date);
+		Product product = new Product();
+		product.setUser_no(item.getNo());
+		product.setTitle(title);
+		product.setProductname(productname);
+		product.setPrice(price);
+		product.setContent(content);
+		product.setDate(date);
+		product.setM_ctg(m_ctg);
+		product.setMd_ctg(md_ctg);
+
 		// 최상위 경로 밑에 upload 폴더의 경로를 가져온다.
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 
@@ -201,14 +210,14 @@ public class NoticeRestController {
 					+ ext;
 			attachment.transferTo(new File(path, uploadFilename));
 			uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
-			notice.setUrl(uploadFilename);
+			product.setUrl(uploadFilename);
 		}
 
-		noticeService.newNotice(notice);
+		productService.newProduct(product);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/rest/notice/{no}")
-				.buildAndExpand(notice.getNo()).toUri());
+		headers.setLocation(ucBuilder.path("/rest/product/{no}")
+				.buildAndExpand(product.getNo()).toUri());
 
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
@@ -220,29 +229,36 @@ public class NoticeRestController {
 	 *  2. 만약 PUT을 이용해서 전송하고 싶다면, input type file에 대해서는
 	 *     따로 POST로 전송하고, 나머지 일반 정보는 PUT으로 따로 전송한다.
 	 */
-	@RequestMapping(value = "/notice/{no}", method = RequestMethod.POST)
+	@RequestMapping(value = "/product/{no}", method = RequestMethod.POST)
 	public ResponseEntity<Void> modify(HttpServletRequest request,
 			@PathVariable("no") int no,
 			String title,
+			String productname,
+			String price,
 			String content,
 			Date date,
+			String m_ctg,
+			String md_ctg,
 			@RequestParam("attachment") MultipartFile attachment,
 			String pwd,
 			UriComponentsBuilder ucBuilder)
 					throws CommonException, Exception {
 
 		// 비밀번호 비교해서 같지 않다면 오류메시지 출력
-		boolean isMatched = userInfoService.isNoticeMatched(no, pwd);
+		boolean isMatched = userInfoService.isProductMatched(no, pwd);
 		if (!isMatched) {
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
 
-		Notice notice = new Notice();
-		notice.setNo(no);
-		notice.setTitle(title);
-		notice.setContent(content);
-		notice.setDate(date);
-		
+		Product product = new Product();
+		product.setNo(no);
+		product.setTitle(title);
+		product.setProductname(productname);
+		product.setPrice(price);
+		product.setContent(content);
+		product.setDate(date);
+		product.setM_ctg(m_ctg);
+		product.setMd_ctg(md_ctg);
 
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 		String originalName = attachment.getOriginalFilename();
@@ -257,10 +273,10 @@ public class NoticeRestController {
 					+ ext;
 			attachment.transferTo(new File(path, uploadFilename));
 			uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
-			notice.setUrl(uploadFilename);
+			product.setUrl(uploadFilename);
 		}
 
-		String oldFilename = noticeService.modify(notice);
+		String oldFilename = productService.modify(product);
 		if (oldFilename != null && !oldFilename.trim().isEmpty()) {
 			fileService.remove(request, UPLOAD_FOLDER, oldFilename);
 		}
@@ -273,7 +289,7 @@ public class NoticeRestController {
 	 *  @RequestHeader("Authorization")을 사용하면
 	 *  "Basic encodeBase64(email:password)" 정보를 가져올 수 있다.
 	 */
-	@RequestMapping(value = "/notice/{no}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/product/{no}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> remove(HttpServletRequest request,
 			@PathVariable("no") String no,
 			@RequestHeader("Authorization") String authorization)
@@ -283,12 +299,12 @@ public class NoticeRestController {
 		String plainCredentials = new String(Base64.decodeBase64(base64Credentials));
 		String password = plainCredentials.split(":")[1];
 
-		boolean isMatched = userInfoService.isNoticeMatched(Integer.parseInt(no), password);
+		boolean isMatched = userInfoService.isProductMatched(Integer.parseInt(no), password);
 		if (!isMatched) {
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
 
-		String filename = noticeService.remove(no);
+		String filename = productService.delete(no);
 		if (filename != null && !filename.trim().isEmpty()) {
 			fileService.remove(request, UPLOAD_FOLDER, filename);
 		}

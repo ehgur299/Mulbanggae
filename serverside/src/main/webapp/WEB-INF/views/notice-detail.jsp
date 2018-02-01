@@ -49,11 +49,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>${ item.content }</td>
-				</tr>
 			</tbody>
 		</table>
+			<div>
+			<c:if test="${ !empty filename }">
+				<img src="<c:url value='/notice/${ filename }'/>" width="540" height="400">
+			</c:if>
+				<p>${ item.content }</p>
+			</div>
 		
 		<hr />
 		

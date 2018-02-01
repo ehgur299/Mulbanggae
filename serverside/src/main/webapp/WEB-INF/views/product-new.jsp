@@ -11,6 +11,14 @@
 <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 <title>물방개</title>
 </head>
+<script type="text/javascript">
+	function check_onclick(){
+		theForm=document.frm1;
+		if(theForm.title.value=="" || theForm.productname.value=="" || theForm.price.value=="" || thForm.content==""){
+			alert("필수 입력란이 비었습니다. 확인해 주세요.");
+			}
+		}
+</script>
 <body>
 	<div class="container">
 		<div class="masthead">
@@ -30,7 +38,7 @@
 			</div>
 			<nav>
 				<ul class="nav nav-justified">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="<c:url value='/'/>">Home</a></li>
 					<li><a href="#">이용안내</a></li>
 					<li><a href="<c:url value='/notice/notice.do'/>">공지사항</a></li>
 				</ul>
@@ -39,8 +47,8 @@
 
 		<hr />
 
-		<h1>공지사항 작성</h1>
-		<form action="<c:url value='/notice/notice-new.do'/>" method="post" enctype="multipart/form-data">
+		<h1>상품 등록</h1>
+		<form name="frm1" action="<c:url value='/product/product-new.do'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-bordered">
 				<tr>
 					<td>작성자</td>
@@ -48,23 +56,35 @@
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td><input type="text" name="title" id="noticeTitle"></td>
+					<td><input type="text" name="title" id="productTitle"></td>
 				</tr>
 				<tr>
-					<td>내용</td>
+					<td>상품명</td>
+					<td><input type="text" name="productname" id="productName"></td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<td><input type="number" name="price" id="productPrice"></td>
+				</tr>
+				<tr>
+					<td>상품설명</td>
 					<td><textarea rows="5" cols="60" name="content"
-							id="noticeContent"></textarea></td>
+							id="productDesc"></textarea></td>
 				</tr>
 				<tr>
-					<td>이미지</td>
-					<td><input type="file" name="url" id="noticePhoto" multiple="multiple"></td>
+					<td>상품이미지</td>
+					<td><input type="file" name="url" id="productPhoto" multiple="multiple"></td>
+				</tr>
+				<tr>
+					<td>대분류 카테고리</td>
+					
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<input type="hidden" name="no" value="${ item.no }">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>
-						<a href="<c:url value='/notice/notice.do'/>" type="button" class="btn btn-default">공지사항 목록으로 이동</a>
+						<a href="<c:url value='/product/product.do'/>" type="button" class="btn btn-default">상품 목록으로 이동</a>
 					</td>
 				</tr>
 			</table>

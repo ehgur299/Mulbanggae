@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mul.product.dao.ProductDao;
 import com.mul.product.dao.UserInfoDao;
+import com.mul.product.model.CommonException;
 import com.mul.product.model.Product;
 import com.mul.product.model.UserInfo;
 
@@ -18,66 +19,52 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductDao dao;
 	
-	@Autowired
-	private UserInfoDao infoDao;
-	
-	@Autowired
-	private PasswordEncoder encoder;
-	
 	public ProductServiceImpl() {}
 	
 	@Override
-	public void newProduct(Product product) {
+	public void newProduct(Product product) throws CommonException {
 		// TODO Auto-generated method stub
 		dao.insert(product);
 	}
 
 	@Override
-	public Product detail(Integer no) {
+	public Product detail(String no) throws CommonException {
 		// TODO Auto-generated method stub
 		return dao.select(no);
 	}
 
 	@Override
-	public List<Product> list() {
+	public List<Product> list() throws CommonException {
 		// TODO Auto-generated method stub
 		return dao.selectAll();
 	}
 
 	@Override
-	public int count() {
+	public int count() throws CommonException {
 		// TODO Auto-generated method stub
 		return dao.productCount();
 	}
 	
 	@Transactional
 	@Override
-	public String modify(Product product) 
+	public String modify(Product product) throws CommonException 
 	{
-		Product item = dao.select(product.getNo());
+		Product item = dao.select(Integer.toString(product.getNo()));
+		String oldFilename = item.getUrl();
 		dao.update(product);
 		
-		return item.getUrl();
+		return oldFilename;
 	}
 	
 	@Transactional
 	@Override
-	public String delete(Integer no) 
+	public String delete(String no) throws CommonException 
 	{
 		Product item = dao.select(no);
-		
+		String filename = item.getUrl();
 		dao.delete(no);
 		
-		return item.getUrl();
-	}
-
-	@Override
-	public boolean isProductMatced(Integer no, String password) {
-		
-		Product product = dao.select(no);
-		UserInfo userInfo = infoDao.select(product.getNo());
-		
-		return encoder.matches(password, userInfo.getPwd());
+		return filename;
 	}
 
 }

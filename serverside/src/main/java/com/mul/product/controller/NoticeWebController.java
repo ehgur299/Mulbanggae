@@ -37,7 +37,7 @@ import com.mul.product.service.UserInfoService;
 @RequestMapping("/notice")
 public class NoticeWebController {
 
-	private static final String UPLOAD_FOLDER = "/upload";
+	private static final String UPLOAD_FOLDER = "/notice";
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
 	

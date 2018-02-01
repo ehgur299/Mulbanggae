@@ -3,35 +3,35 @@ package com.mul.product.model;
 import java.util.Date;
 
 public class Product {
-	public Product() {
-	}
-
-	public Product(Integer no, String title, String name, String price, String content, String uri, Date date,
-			String user_no, String m_ctg, String md_ctg) {
-		super();
-		this.no = no;
-		this.title = title;
-		this.name = name;
-		this.price = price;
-		this.content = content;
-		this.url = uri;
-		this.date = date;
-		this.user_no = user_no;
-		this.m_ctg = m_ctg;
-		this.md_ctg = md_ctg;
-	}
 
 	private Integer no;
 	private String title;
-	private String name;
+	private String productname;
 	private String price;
 	private String content;
 	private String url;
 	private Date date;
 
-	private String user_no;
+	private Integer user_no;
 	private String m_ctg;
 	private String md_ctg;
+	
+	public Product() {}
+	
+	public Product(Integer no, String title, String productname, String price, String content, String url, Date date,
+			Integer user_no, String m_ctg, String md_ctg) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.productname = productname;
+		this.price = price;
+		this.content = content;
+		this.url = url;
+		this.date = date;
+		this.user_no = user_no;
+		this.m_ctg = m_ctg;
+		this.md_ctg = md_ctg;
+	}
 
 	public Integer getNo() {
 		return no;
@@ -39,38 +39,6 @@ public class Product {
 
 	public void setNo(Integer no) {
 		this.no = no;
-	}
-
-	public String getM_ctg() {
-		return m_ctg;
-	}
-
-	public void setM_ctg(String m_ctg) {
-		this.m_ctg = m_ctg;
-	}
-
-	public String getMd_ctg() {
-		return md_ctg;
-	}
-
-	public void setMd_ctg(String md_ctg) {
-		this.md_ctg = md_ctg;
-	}
-
-	public String getUser_no() {
-		return user_no;
-	}
-
-	public void setUser_no(String user_no) {
-		this.user_no = user_no;
-	}
-
-	public Integer getNumber() {
-		return no;
-	}
-
-	public void setNumber(Integer number) {
-		this.no = number;
 	}
 
 	public String getTitle() {
@@ -81,12 +49,12 @@ public class Product {
 		this.title = title;
 	}
 
-	public String getName() {
-		return name;
+	public String getProductname() {
+		return productname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProductname(String productname) {
+		this.productname = productname;
 	}
 
 	public String getPrice() {
@@ -109,8 +77,8 @@ public class Product {
 		return url;
 	}
 
-	public void setUrl(String uri) {
-		this.url = uri;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Date getDate() {
@@ -121,27 +89,28 @@ public class Product {
 		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Product [no=");
-		builder.append(no);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", content=");
-		builder.append(content);
-		builder.append(", uri=");
-		builder.append(url);
-		builder.append(", date=");
-		builder.append(date);
-		builder.append(", user_no=");
-		builder.append(user_no);
-		builder.append("]");
-		return builder.toString();
+	public Integer getUser_no() {
+		return user_no;
+	}
+
+	public void setUser_no(Integer user_no) {
+		this.user_no = user_no;
+	}
+
+	public String getM_ctg() {
+		return m_ctg;
+	}
+
+	public void setM_ctg(String m_ctg) {
+		this.m_ctg = m_ctg;
+	}
+
+	public String getMd_ctg() {
+		return md_ctg;
+	}
+
+	public void setMd_ctg(String md_ctg) {
+		this.md_ctg = md_ctg;
 	}
 
 	@Override
@@ -150,11 +119,14 @@ public class Product {
 		int result = 1;
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((m_ctg == null) ? 0 : m_ctg.hashCode());
+		result = prime * result + ((md_ctg == null) ? 0 : md_ctg.hashCode());
 		result = prime * result + ((no == null) ? 0 : no.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((productname == null) ? 0 : productname.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((user_no == null) ? 0 : user_no.hashCode());
 		return result;
 	}
 
@@ -177,10 +149,15 @@ public class Product {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (m_ctg == null) {
+			if (other.m_ctg != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!m_ctg.equals(other.m_ctg))
+			return false;
+		if (md_ctg == null) {
+			if (other.md_ctg != null)
+				return false;
+		} else if (!md_ctg.equals(other.md_ctg))
 			return false;
 		if (no == null) {
 			if (other.no != null)
@@ -192,6 +169,11 @@ public class Product {
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
+		if (productname == null) {
+			if (other.productname != null)
+				return false;
+		} else if (!productname.equals(other.productname))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -202,7 +184,38 @@ public class Product {
 				return false;
 		} else if (!url.equals(other.url))
 			return false;
+		if (user_no == null) {
+			if (other.user_no != null)
+				return false;
+		} else if (!user_no.equals(other.user_no))
+			return false;
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Product [no=");
+		builder.append(no);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", productname=");
+		builder.append(productname);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", content=");
+		builder.append(content);
+		builder.append(", url=");
+		builder.append(url);
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", user_no=");
+		builder.append(user_no);
+		builder.append(", m_ctg=");
+		builder.append(m_ctg);
+		builder.append(", md_ctg=");
+		builder.append(md_ctg);
+		builder.append("]");
+		return builder.toString();
+	}
 }

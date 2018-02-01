@@ -9,7 +9,7 @@ public interface ProductDao
 {
 	public void insert(Product product) throws CommonException;
 	
-	public Product select(Integer no) throws CommonException;
+	public Product select(String no) throws CommonException;
 	
 	public List<Product> selectByTitle(String title) throws CommonException;
 	
@@ -21,5 +21,5 @@ public interface ProductDao
 	
 	public void update(Product product) throws CommonException;
 	
-	public void delete(Integer no) throws CommonException;
+	public void delete(String no) throws CommonException;
 }
