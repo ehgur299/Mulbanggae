@@ -14,12 +14,11 @@ public class Product {
 
 	private Integer user_no;
 	private String m_ctg;
-	private String md_ctg;
 	
 	public Product() {}
-	
+
 	public Product(Integer no, String title, String productname, String price, String content, String url, Date date,
-			Integer user_no, String m_ctg, String md_ctg) {
+			Integer user_no, String m_ctg) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -30,7 +29,6 @@ public class Product {
 		this.date = date;
 		this.user_no = user_no;
 		this.m_ctg = m_ctg;
-		this.md_ctg = md_ctg;
 	}
 
 	public Integer getNo() {
@@ -105,14 +103,6 @@ public class Product {
 		this.m_ctg = m_ctg;
 	}
 
-	public String getMd_ctg() {
-		return md_ctg;
-	}
-
-	public void setMd_ctg(String md_ctg) {
-		this.md_ctg = md_ctg;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -120,7 +110,6 @@ public class Product {
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((m_ctg == null) ? 0 : m_ctg.hashCode());
-		result = prime * result + ((md_ctg == null) ? 0 : md_ctg.hashCode());
 		result = prime * result + ((no == null) ? 0 : no.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((productname == null) ? 0 : productname.hashCode());
@@ -153,11 +142,6 @@ public class Product {
 			if (other.m_ctg != null)
 				return false;
 		} else if (!m_ctg.equals(other.m_ctg))
-			return false;
-		if (md_ctg == null) {
-			if (other.md_ctg != null)
-				return false;
-		} else if (!md_ctg.equals(other.md_ctg))
 			return false;
 		if (no == null) {
 			if (other.no != null)
@@ -213,8 +197,6 @@ public class Product {
 		builder.append(user_no);
 		builder.append(", m_ctg=");
 		builder.append(m_ctg);
-		builder.append(", md_ctg=");
-		builder.append(md_ctg);
 		builder.append("]");
 		return builder.toString();
 	}

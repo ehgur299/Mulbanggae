@@ -4,46 +4,61 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.mul.product.dao.ProductDaoImpl">
   	
-  	<insert id="insert" parameterType="Product">
-  		INSERT INTO 
-  		M_PRODUCT(product_number, product_title, product_name, product_price, product_content, product_url, product_date, user_number, C_ID, D_ID)
-  		VALUES(pNum_SEQ.NEXTVAL, #{title}, #{name}, #{price}, #{content}, #{url}, SYSDATE, #{user_no}, #{m_ctg}, #{md_ctg})
+  	<insert id="insert" parameterMap="Product">
+  		<selectKey keyProperty="no" resultType="Integer" order="BEFORE">
+  			SELECT product_seq.NEXTVAL no FROM DUAL
+  		</selectKey>
+  		INSERT INTO M_PRODUCT 
+  		(product_number, product_title, product_name, product_price, product_content, product_url, product_date, user_number, C_ID)
+  		VALUES(#{no}, #{title}, #{productname}, #{price}, #{content}, #{url}, SYSDATE, #{user_num}, #{cid})
   	</insert>
   	
-  	<select id="select" parameterType="Integer" resultType="Product">
-  		SELECT * FROM M_Product WHERE product_number = #{no}
+  	<resultMap type="Product" id="productResultMap">
+  		<id property="no" column="product_number"/>
+  		<result property="title" column="product_title"/>
+  		<result property="productname" column="product_name" />
+  		<result property="price" column="product_price" />
+  		<result property="content" column = "product_content"/>
+  		<result property="url" column="product_url" />
+  		<result property="date" column="product_date"/>
+  		<result property="cid" column="C_ID"/>
+  		<result property="cname" column="C_Name"/>
+  		<result property="user_num" column="user_number"/>
+  		<result property="userInfo.nickname" column="user_nickname"/>
+  	</resultMap>
+  	
+  	<select id="select" parameterType="String" resultMap="productResultMap">
+  		SELECT 
+  		p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date,
+  		c.c_id, c.c_name
+  		u.user_number, u.user_nickname,
+  		FROM M_Product p, user_info u, M_Category c 
+  		WHERE p.user_number = u.user_number AND product_number = #{no}
   	</select>
   	
-  	<select id="selectAll" resultType="Product">
-  		SELECT * FROM M_Product ORDER BY product_number DESC
+  	<select id="selectAll" resultMap="productResultMap">
+  		SELECT
+  		p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date,
+  		c.c_id, c.c_name,
+  		u.user_number, u.user_nickname
+  		FROM M_Product p, user_info u, M_Category c 
+  		WHERE p.user_number = u.user_number ORDER BY p.product_number DESC
   	</select>
   	
-  	<select id="count" resultType="Integer">
-  		SELECT count(*) FROM M_Product
+  	<select id="count" resultMap="productResultMap">
+  		SELECT count(*) FROM M_Product WHERE 1=1
   	</select>
   	
   	<update id="update" parameterType="Product">
   		UPDATE M_Product
-  		SET product_title = #{title}, product_name = #{name},
+  		SET product_title = #{title}, product_name = #{productname},
   			product_price = #{price}, product_content = #{content},
-  			product_url = #{url}, C_ID = #{m_ctg}, D_ID = #{md_ctg}
-  		WHERE product_number = #{no}, user_number = #{user_no}
+  			product_url = #{url}, C_ID = #{cid}
+  		WHERE product_number = #{no}
   	</update>
   	
   	<delete id="delete" parameterType="Integer">
   		DELETE FROM M_Product WHERE product_number = #{no}
   	</delete>
   	
-  	<resultMap type="Product" id="ProductResultMap">
-  		<id property="no" column="product_number"/>
-  		<result property="title" column="product_title"/>
-  		<result property="name" column="product_name" />
-  		<result property="price" column="product_price" />
-  		<result property="content" column = "product_content"/>
-  		<result property="url" column="product_url" />
-  		<result property="date" column="product_date"/>
-  		<result property="user_no" column="user_number"/>
-  		<result property="m_ctg" column="C_ID"/>
-  		<result property="md_ctg" column="D_ID"/>
-  	</resultMap>
   </mapper>

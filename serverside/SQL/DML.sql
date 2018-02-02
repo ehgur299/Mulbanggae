@@ -1,11 +1,17 @@
 SELECT * FROM user_info;
 SELECT * FROM notice;
+SELECT * FROM USER_TYPE;
+SELECT * FROM M_CATEGORY;
+SELECT * FROM M_PRODUCT;
 
 INSERT INTO user_type(ut_number, ut_type)
 VALUES (user_type_seq.NEXTVAL, 'ADMIN');
 
 INSERT INTO user_type(ut_number, ut_type)
 VALUES (user_type_seq.NEXTVAL, 'USER');
+
+INSERT INTO M_Category(c_id, c_name)
+VALUES (category_seq.NEXTVAL, '의류');
 
 INSERT INTO user_info (user_number, user_nickname, user_id, user_pwd, user_gender, user_birth)
 VALUES (user_info_seq.NEXTVAL, '관리자', 'admin' , '1234', '남자', '19990101')
@@ -18,7 +24,7 @@ FROM user_info u,
 (SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
 FROM user_info_type, user_type
 WHERE user_type.ut_number = user_info_type.ut_number) ut
-WHERE u.user_number = ut.user_number AND u.user_number = 25;
+WHERE u.user_number = ut.user_number AND u.user_number = 1;
 
 INSERT INTO user_info_type(user_number, ut_number)
 VALUES (1, 1);
@@ -51,3 +57,21 @@ WHERE user_type.ut_number = user_info_type.ut_number) ut
 WHERE u.user_number = ut.user_number AND u.user_number = 1;
 
 SELECT * FROM M_Product ORDER BY product_number DESC
+
+INSERT INTO M_PRODUCT 
+(product_number, product_title, product_name, product_price, product_content, product_url, product_date, user_number, C_ID)
+VALUES(product_seq.NEXTVAL, '테스트입니다', '테스트입니다', 10000, '테스트입니다', NULL, SYSDATE, 1, 1);
+
+SELECT u.user_number as "UNUMBER", u.user_nickname, u.user_id, u.user_pwd, u.user_gender, u.user_birth, ut.ut_number, ut.ut_type
+FROM user_info u,
+(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
+FROM user_info_type, user_type
+WHERE user_type.ut_number = user_info_type.ut_number) ut
+WHERE u.user_number = ut.user_number AND u.user_number = 1;
+
+SELECT
+p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date,
+c.c_id, c.c_name,
+u.user_number, u.user_nickname
+FROM M_Product p, user_info u, M_Category c
+WHERE p.user_number = u.user_number ORDER BY p.product_number DESC

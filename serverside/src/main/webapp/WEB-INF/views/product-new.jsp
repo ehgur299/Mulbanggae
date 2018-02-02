@@ -12,8 +12,11 @@
 <title>물방개</title>
 </head>
 <script type="text/javascript">
+	function getSelectValue(frm){
+ 		frm.m_ctg.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
+		}
 	function check_onclick(){
-		theForm=document.frm1;
+		theForm=document.frm;
 		if(theForm.title.value=="" || theForm.productname.value=="" || theForm.price.value=="" || thForm.content==""){
 			alert("필수 입력란이 비었습니다. 확인해 주세요.");
 			}
@@ -48,7 +51,7 @@
 		<hr />
 
 		<h1>상품 등록</h1>
-		<form name="frm1" action="<c:url value='/product/product-new.do'/>" method="post" enctype="multipart/form-data">
+		<form name="frm" action="<c:url value='/product/product-new.do'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-bordered">
 				<tr>
 					<td>작성자</td>
@@ -76,15 +79,27 @@
 					<td><input type="file" name="url" id="productPhoto" multiple="multiple"></td>
 				</tr>
 				<tr>
-					<td>대분류 카테고리</td>
-					
+					<td>카테고리</td>
+					<td>
+					<select name="selectBox" onChange="getSelectValue(this.form);">
+					<option value="1">의류</option>
+ 					<option value="2">스포츠/레저</option>
+ 					<option value="3">디지털/가전</option>
+ 					<option value="4">도서/취미/애완/티켓</option>
+ 					<option value="5">차량/오토바이</option>
+ 					<option value="6">생활/문구/가구/식품</option>
+ 					<option value="7">유아동/출산</option>
+ 					<option value="8">기타</option>
+					</select>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="hidden" name="no" value="${ item.no }">
+						<input type="text" name="no" value="${ item.no }">
+						<input type="text" value="1" name="m_ctg">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>
-						<a href="<c:url value='/product/product.do'/>" type="button" class="btn btn-default">상품 목록으로 이동</a>
+						<a href="<c:url value='/product/product.do'/>" type="check" class="btn btn-default" onclick="check_onclick()">상품 목록으로 이동</a>
 					</td>
 				</tr>
 			</table>

@@ -42,17 +42,6 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
-				<div class="hdbox">대분류 카테고리</div>
-				<div class="ctglist">
-					<ul>
-						<li><a href="">소분류 카테고리</a></li>
-
-						<li><a href="">소분류 카테고리</a></li>
-					</ul>
-
-				</div>
-				
-				<hr/>
 				
 				<h1>상품목록</h1>
 				<table class="table table-striped">
@@ -61,6 +50,8 @@
 							<th>상품번호</th>
 							<th>제목</th>
 							<th>상품명</th>
+							<th>가격</th>
+							<th>작성자</th>
 							<th>날짜</th>
 						</tr>
 					</thead>
@@ -69,6 +60,8 @@
 						<tr>
 							<td>${ product.no }</td>
 							<td><a href="<c:url value='/product/product-detail.do?no=${ product.no }'/>">${ product.title }</a></td>
+							<th>${ product.productname }</th>
+							<th>${ product.price }
 							<td>${ product.userInfo.nickname }</td>
 							<td>${ product.date }</td>
 						</tr>

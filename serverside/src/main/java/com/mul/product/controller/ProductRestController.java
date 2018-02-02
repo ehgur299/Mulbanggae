@@ -172,7 +172,6 @@ public class ProductRestController {
 			Date date,
 			@RequestParam("url") MultipartFile attachment,
 			String m_ctg,
-			String md_ctg,
 			UriComponentsBuilder ucBuilder)
 					throws CommonException, Exception {
 
@@ -186,7 +185,6 @@ public class ProductRestController {
 		product.setContent(content);
 		product.setDate(date);
 		product.setM_ctg(m_ctg);
-		product.setMd_ctg(md_ctg);
 
 		// 최상위 경로 밑에 upload 폴더의 경로를 가져온다.
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
@@ -238,7 +236,6 @@ public class ProductRestController {
 			String content,
 			Date date,
 			String m_ctg,
-			String md_ctg,
 			@RequestParam("attachment") MultipartFile attachment,
 			String pwd,
 			UriComponentsBuilder ucBuilder)
@@ -258,7 +255,6 @@ public class ProductRestController {
 		product.setContent(content);
 		product.setDate(date);
 		product.setM_ctg(m_ctg);
-		product.setMd_ctg(md_ctg);
 
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 		String originalName = attachment.getOriginalFilename();

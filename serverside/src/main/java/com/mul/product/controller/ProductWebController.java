@@ -111,8 +111,8 @@ public class ProductWebController {
 			String price,
 			String content,
 			@RequestParam("url") MultipartFile url,
-			String m_ctg,
-			String md_ctg)
+			String m_ctg
+			)
 				throws CommonException, IllegalStateException, IOException
 		{
 			Product product = new Product();
@@ -122,7 +122,6 @@ public class ProductWebController {
 			product.setContent(content);
 			product.setPrice(price);
 			product.setM_ctg(m_ctg);
-			product.setMd_ctg(md_ctg);
 			
 			String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 			
@@ -201,7 +200,6 @@ public class ProductWebController {
 			String productname,
 			String price,
 			String m_ctg,
-			String md_ctg,
 			@RequestParam("url") MultipartFile url,
 			String password) throws IllegalStateException, IOException
 	{
@@ -217,7 +215,6 @@ public class ProductWebController {
 		product.setProductname(productname);
 		product.setPrice(price);
 		product.setM_ctg(m_ctg);
-		product.setMd_ctg(md_ctg);
 		
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 		String originalName = url.getOriginalFilename();
