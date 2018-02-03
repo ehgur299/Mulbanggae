@@ -9,7 +9,7 @@ public interface UserInfoDao {
 
 	public List<UserInfo> selectAll() throws CommonException;
 	
-	public UserInfo select(Integer uid) throws CommonException;
+	public UserInfo select(String no) throws CommonException;
 	
 	public void insert(UserInfo user) throws CommonException;
 	

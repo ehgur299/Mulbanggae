@@ -39,7 +39,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public UserInfo detail(Integer uid) throws CommonException {
-		return userInfoDao.select(uid);
+		return userInfoDao.select(uid.toString());
 	}
 
 	@Transactional
@@ -63,7 +63,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public String delete(Integer no, String pwd) throws CommonException {
 		
-		UserInfo item = userInfoDao.select(no);
+		UserInfo item = userInfoDao.select(no.toString());
 		
 		boolean isMatched = encoder.matches(pwd, item.getPwd());
 		if (isMatched) {
@@ -85,7 +85,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		 *  해당 사용자의 비밀번호를 가져온다.
 		 */
 		Notice notice = noticeDao.select(no.toString());
-		UserInfo userInfo = userInfoDao.select(notice.getNo());
+		UserInfo userInfo = userInfoDao.select(notice.getNo().toString());
 		
 		// 해당 사용자의 비밀번호와 입력한 비밀번호 비교한 결과 리턴
 		return encoder.matches(rawPassword, userInfo.getPwd());
@@ -95,7 +95,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public boolean isPasswordMatched(Integer uid, String rawPassword) throws CommonException {
 		
 		// 데이터베이스로부터 현재 사용자의 암호화된 비밀번호를 가져온다.
-		UserInfo item = userInfoDao.select(uid);
+		UserInfo item = userInfoDao.select(uid.toString());
 		return encoder.matches(rawPassword, item.getPwd());
 	}
 
@@ -131,7 +131,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public String modify(UserInfo userInfo) throws CommonException {
 		
-		UserInfo item = userInfoDao.select(userInfo.getNo());
+		UserInfo item = userInfoDao.select(userInfo.getNo().toString());
 		String oldFilename = item.getNickname();
 		userInfoDao.update(userInfo);
 
@@ -139,7 +139,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public boolean isProductMatched(Integer no, String rawPassword) throws CommonException {
+	public boolean isProductMatched(String no, String rawPassword) throws CommonException {
 		/*
 		 *  게시물 번호를 이용하여 게시물을 가져온 뒤
 		 *  게시물의 작성자 id값을 획득한 후,

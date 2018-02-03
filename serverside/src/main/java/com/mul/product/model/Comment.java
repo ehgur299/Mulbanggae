@@ -6,7 +6,7 @@ public class Comment
 {
 	public Comment() {}
 	
-	public Comment(int cmt_no, int product_no, int user_no, String cmt_content, Date cmt_date) {
+	public Comment(int cmt_no, int product_no, String user_no, String cmt_content, Date cmt_date) {
 		super();
 		this.cmt_no = cmt_no;
 		this.product_no = product_no;
@@ -17,7 +17,7 @@ public class Comment
 
 	int cmt_no;
 	int product_no;
-	int user_no;
+	String user_no;
 	String cmt_content;
 	Date cmt_date;
 	
@@ -47,7 +47,6 @@ public class Comment
 		result = prime * result + ((cmt_date == null) ? 0 : cmt_date.hashCode());
 		result = prime * result + cmt_no;
 		result = prime * result + product_no;
-		result = prime * result + user_no;
 		return result;
 	}
 
@@ -91,10 +90,10 @@ public class Comment
 	public void setProduct_no(int product_no) {
 		this.product_no = product_no;
 	}
-	public int getUser_no() {
+	public String getUser_no() {
 		return user_no;
 	}
-	public void setUser_no(int user_no) {
+	public void setUser_no(String user_no) {
 		this.user_no = user_no;
 	}
 	public String getCmt_content() {

@@ -82,7 +82,7 @@ public class ProductRestController {
 
 		product = productService.detail(no);
 
-		if (product != null && product.getNo() > 0) {
+		if (product != null && !product.getNo().isEmpty()) {
 			filename = product.getUrl();
 			if (filename != null && !filename.trim().isEmpty()) {
 				filename = URLDecoder.decode(filename, "UTF-8");
@@ -229,7 +229,7 @@ public class ProductRestController {
 	 */
 	@RequestMapping(value = "/product/{no}", method = RequestMethod.POST)
 	public ResponseEntity<Void> modify(HttpServletRequest request,
-			@PathVariable("no") int no,
+			@PathVariable("no") String no,
 			String title,
 			String productname,
 			String price,
@@ -295,7 +295,7 @@ public class ProductRestController {
 		String plainCredentials = new String(Base64.decodeBase64(base64Credentials));
 		String password = plainCredentials.split(":")[1];
 
-		boolean isMatched = userInfoService.isProductMatched(Integer.parseInt(no), password);
+		boolean isMatched = userInfoService.isProductMatched(no, password);
 		if (!isMatched) {
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}

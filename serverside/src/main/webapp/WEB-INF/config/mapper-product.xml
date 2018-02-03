@@ -15,27 +15,25 @@
   	<resultMap type="Product" id="productResultMap">
   		<id property="no" column="product_number"/>
   		<result property="title" column="product_title"/>
-  		<result property="name" column="product_name" />
+  		<result property="productname" column="product_name" />
   		<result property="price" column="product_price" />
   		<result property="content" column = "product_content"/>
   		<result property="url" column="product_url" />
   		<result property="date" column="product_date"/>
-  		<result property="user_num" column="user_number"/>
-  		<result property="userInfo.nickname" column="user_nickname"/>
-  		<result property="cid" column="c_id"/>
-  		<result property="cname" column="c_name"/>
+  		<result property="user_no" column="user_number"/>
+  		<result property="m_ctg" column="c_id"/>
+  		<result property="m_ctg_name" column="c_name"/>
   	</resultMap>
   	
   	<select id="select" parameterType="String" resultMap="productResultMap">
-  		SELECT p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date, u.user_nickname, c.c_name
-  		FROM m_product p, user_info u, m_category c
-  		WHERE p.user_number = u.user_number AND product_number = #{no}
+  		SELECT *
+  		FROM M_Product
+  		WHERE product_number = #{no}
   	</select>
   	
   	<select id="selectAll" resultMap="productResultMap">
-  		SELECT p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date, u.user_nickname, c.c_name
-  		FROM m_product p, user_info u, m_category c 
-  		WHERE p.user_number = u.user_number ORDER BY p.product_number DESC
+  		SELECT * FROM M_Product
+  		ORDER BY product_number DESC
   	</select>
   	
   	<select id="count" resultMap="productResultMap">

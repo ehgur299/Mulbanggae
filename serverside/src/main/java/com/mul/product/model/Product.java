@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Product {
 
-	private Integer no;
+	private String no;
 	private String title;
 	private String productname;
 	private String price;
@@ -14,11 +14,23 @@ public class Product {
 
 	private Integer user_no;
 	private String m_ctg;
+	private String m_ctg_name;
 	
 	public Product() {}
 
-	public Product(Integer no, String title, String productname, String price, String content, String url, Date date,
-			Integer user_no, String m_ctg) {
+
+	public String getM_ctg_name() {
+		return m_ctg_name;
+	}
+
+
+	public void setM_ctg_name(String m_ctg_name) {
+		this.m_ctg_name = m_ctg_name;
+	}
+
+
+	public Product(String no, String title, String productname, String price, String content, String url, Date date,
+			Integer user_no, String m_ctg, String m_ctg_name) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -29,13 +41,14 @@ public class Product {
 		this.date = date;
 		this.user_no = user_no;
 		this.m_ctg = m_ctg;
+		this.m_ctg_name = m_ctg_name;
 	}
 
-	public Integer getNo() {
+	public String getNo() {
 		return no;
 	}
 
-	public void setNo(Integer no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 

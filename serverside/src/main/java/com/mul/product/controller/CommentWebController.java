@@ -63,7 +63,7 @@ public class CommentWebController
 		comment.setCmt_content(content);
 		String id = this.getPrincipal();
 		UserInfo userInfo = userInfoService.detail(id);
-		comment.setUser_no(Integer.parseInt(userInfo.getId()));
+		comment.setUser_no(userInfo.getId());
 		
 		return "redirect:list";
 	}

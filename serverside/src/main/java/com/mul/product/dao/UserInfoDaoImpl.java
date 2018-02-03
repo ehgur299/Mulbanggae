@@ -39,7 +39,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	}
 
 	@Override
-	public UserInfo select(Integer uid) throws CommonException {
+	public UserInfo select(String uid) throws CommonException {
 		UserInfo userInfo = null;
 		
 		try {

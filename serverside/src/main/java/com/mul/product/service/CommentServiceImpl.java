@@ -68,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		
 		Comment comment = dao.select(no.toString());
-		UserInfo userInfo = userInfoDao.select(comment.getCmt_no());
+		UserInfo userInfo = userInfoDao.select(comment.getUser_no());
 		
 		return encoder.matches(password, userInfo.getPwd());
 	}

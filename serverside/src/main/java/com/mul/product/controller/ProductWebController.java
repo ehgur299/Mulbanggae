@@ -70,7 +70,7 @@ public class ProductWebController {
 		return "product";
 	}
 	
-	@RequestMapping(value = "/product-detail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/detail.do", method = RequestMethod.GET)
 	public String detail(Model model, 
 			@RequestParam(value = "no", required=true)String no) throws CommonException,UnsupportedEncodingException
 	{
@@ -87,7 +87,7 @@ public class ProductWebController {
 		model.addAttribute("item", product);
 		model.addAttribute("filename", filename);
 		
-		return "product-detail";
+		return "product_detail";
 	}
 	
 	@RequestMapping( value="/product-new.do", method = RequestMethod.GET)
@@ -164,7 +164,7 @@ public class ProductWebController {
 						 @RequestParam(value = "no", required = true) String no,
 						 String password) throws CommonException, UnsupportedEncodingException
 		{
-			boolean isMatched = userInfoService.isProductMatched(Integer.parseInt(no), password);
+			boolean isMatched = userInfoService.isProductMatched(no, password);
 			if(!isMatched)
 			{
 				return "redirect:/product/product-remove?no=" + no + "&action=error-password";
@@ -194,7 +194,7 @@ public class ProductWebController {
 	
 	@RequestMapping(value="/modify", method = RequestMethod.POST)
 	public String modify(HttpServletRequest request,
-			int no,
+			String no,
 			String title,
 			String content,
 			String productname,

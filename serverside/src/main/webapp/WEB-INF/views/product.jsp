@@ -59,10 +59,10 @@
 					<c:forEach items="${ product }" var="product">
 						<tr>
 							<td>${ product.no }</td>
-							<td><a href="<c:url value='/product/product-detail.do?no=${ product.no }'/>">${ product.title }</a></td>
+							<td><a href="<c:url value='/product/detail.do?no=${ product.no }'/>">${ product.title }</a></td>
 							<th>${ product.productname }</th>
 							<th>${ product.price }
-							<td>${ product.userInfo.nickname }</td>
+							<td>${ item.nickname }</td>
 							<td>${ product.date }</td>
 						</tr>
 					</c:forEach>

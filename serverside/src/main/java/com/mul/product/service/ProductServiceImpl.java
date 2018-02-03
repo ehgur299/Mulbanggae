@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String modify(Product product) throws CommonException 
 	{
-		Product item = dao.select(Integer.toString(product.getNo()));
+		Product item = dao.select(product.getNo());
 		String oldFilename = item.getUrl();
 		dao.update(product);
 		

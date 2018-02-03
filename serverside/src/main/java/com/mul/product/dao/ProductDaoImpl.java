@@ -59,6 +59,7 @@ public class ProductDaoImpl implements ProductDao
 			
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
+			System.out.println(e.getMessage());
 			throw new CommonException("E02: 게시물 전체 검색 실패");
 		}
 		

@@ -19,6 +19,9 @@ VALUES (user_info_seq.NEXTVAL, '관리자', 'admin01' , '$2a$10$H2cNj1Wzao05jMLD
 INSERT INTO m_product (product_number, product_title, product_name, product_price, product_content, product_url, product_date, user_number, c_id)
 VALUES (product_seq.NEXTVAL, '테스트입니다', '테스트입니다', 10000, '테스트입니다', NULL, SYSDATE, 1, 1);
 
+SELECT * FROM M_Product
+  		ORDER BY product_number DESC
+
 SELECT p.product_number, p.product_title, p.product_name, p.product_price, p.product_content, p.product_url, p.product_date, u.user_nickname, c.c_name
 FROM m_product p, user_info u, m_category c 
 WHERE p.user_number = u.user_number ORDER BY p.product_number DESC
