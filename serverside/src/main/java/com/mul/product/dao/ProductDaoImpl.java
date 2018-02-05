@@ -9,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mul.product.model.CommonException;
-import com.mul.product.model.Notice;
 import com.mul.product.model.Product;
 
 @Repository
-public class ProductDaoImpl implements ProductDao
-{
+public class ProductDaoImpl implements ProductDao {
+	
 	private Logger logger = LogManager.getLogger(this.getClass());
 	
 	private static final String MAPPER_NAMESPACE = ProductDaoImpl.class.getName();
-	
+
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -36,7 +35,7 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public Product select(String no) throws CommonException {	
+	public Product select(String no) throws CommonException {
 		Product product = null;
 		
 		try {
@@ -47,7 +46,7 @@ public class ProductDaoImpl implements ProductDao
 			throw new CommonException("E01: 게시물 검색 실패");
 		}
 		
-		return product;	
+		return product;
 	}
 
 	@Override
@@ -59,7 +58,6 @@ public class ProductDaoImpl implements ProductDao
 			
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
-			System.out.println(e.getMessage());
 			throw new CommonException("E02: 게시물 전체 검색 실패");
 		}
 		
@@ -67,7 +65,7 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public int productCount() throws CommonException {
+	public int ProductCount() throws CommonException {
 		Integer count = 0;
 		
 		try {
@@ -82,8 +80,8 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public void update(Product product) 
-	{
+	public void update(Product product) throws CommonException {
+		
 		try {
 			sqlSession.update(MAPPER_NAMESPACE + ".update", product);
 			
@@ -94,7 +92,7 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public void delete(String no) {
+	public void delete(String no) throws CommonException {
 		try {
 			sqlSession.delete(MAPPER_NAMESPACE + ".delete", no);
 			
@@ -102,18 +100,6 @@ public class ProductDaoImpl implements ProductDao
 			logger.debug(e.getMessage());
 			throw new CommonException("E08: 게시물 삭제 실패");
 		}
-	}
-
-	@Override
-	public List<Product> selectByTitle(String title) throws CommonException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> selectByPrice(int minPrice, int maxPrice) throws CommonException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

@@ -1,9 +1,10 @@
-drop TABLE md_Category;
+drop TABLE M_CATEGORY;
 
 drop SEQUENCE notice_seq;
 drop SEQUENCE user_info_seq;
 drop SEQUENCE user_type_seq;
 drop SEQUENCE product_seq;
+drop SEQUENCE category_seq;
 
 CREATE SEQUENCE notice_seq
 START WITH 1 INCREMENT BY 1;

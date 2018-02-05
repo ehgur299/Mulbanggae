@@ -77,6 +77,13 @@ public class NoticeWebController {
 			@RequestParam(value = "no", required=true) String no)
 					throws CommonException, Exception {
 		
+		String id = this.getPrincipal();
+		
+		if (id != null && !id.trim().isEmpty()) {
+			UserInfo item = userInfoService.detail(id);
+			model.addAttribute("userInfo", item);
+		}
+		
 		Notice notice = null;
 		String filename = null;
 		

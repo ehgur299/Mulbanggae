@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="../css/ctg.css">
 <title>물방개</title>
 </head>
 <body>
@@ -18,7 +17,7 @@
 			<h3>물건파는 방구석 개인들</h3>
 			<div class="text-right">
 				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
-				<p>${ item.nickname }(${ item.id })님 안녕하세요!</p>
+				<p>${ userInfo.nickname }(${ userInfo.id })님 안녕하세요!</p>
 				</sec:authorize>
 				<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
 				<a href="<c:url value='/join'/>" class="btn btn-primary">회원가입</a>
@@ -42,47 +41,36 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
-				
-				<h1>상품목록</h1>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>상품번호</th>
-							<th>제목</th>
-							<th>상품명</th>
-							<th>가격</th>
-							<th>작성자</th>
-							<th>날짜</th>
-						</tr>
-					</thead>
-					<tbody>
-					<c:forEach items="${ product }" var="product">
-						<tr>
-							<td>${ product.no }</td>
-							<td><a href="<c:url value='/product/product-detail.do?no=${ product.no }'/>">${ product.title }</a></td>
-							<th>${ product.name }</th>
-							<th>${ product.price }
-							<td>${ product.userInfo.nickname }</td>
-							<td>${ product.date }</td>
-						</tr>
-					</c:forEach>
-					</tbody>
-				</table>
-
-				<hr />
-				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')" >
-				<a href="<c:url value='/product/product-new.do'/>" class="btn btn-default">상품 등록</a>
-				</sec:authorize>
-
-				<div class="text-center">
-					<ul class="pagination">
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-					</ul>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>상품번호: ${ item.no }</th>
+						<th>제목: ${ item.title }</th>
+						<th>작성자: ${ item.userInfo.nickname }</th>
+						<th>상품명: ${ item.name }</th>
+						<th>가격: ${ item.price }원</th>
+						<th>날짜: ${ item.date }</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+				<div>
+				<c:if test="${ !empty filename }">
+					<img src="<c:url value='/product/${ filename }'/>" width="540" height="400">
+				</c:if>
+					<p>${ item.content }</p>
 				</div>
+				
+			<hr />
+			
+			<div class="text-right">
+			<c:if test="${ !empty filename }">
+				<p>첨부파일</p>
+				<a href="<c:url value='/product/download.do?filename=${ item.url }'/>">${ filename }</a>
+			</c:if>
+			</div>
 				<!-- /.col-lg-4 -->
 			</div>
 			<!--/row-->
@@ -95,6 +83,17 @@
 			</div>
 			<!--/.sidebar-offcanvas-->
 		</div>
+		
+		<div class="text-center">
+			<ul class="pagination">
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+			</ul>
+		</div>
+		
 	</div>
 </body>
 </html>

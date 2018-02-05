@@ -17,7 +17,7 @@
 			<h3>물건파는 방구석 개인들</h3>
 			<div class="text-right">
 				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
-				<p>${ item.userInfo.nickname }(${ item.userInfo.id })님 안녕하세요!</p>
+				<p>${ userInfo.nickname }(${ userInfo.id })님 안녕하세요!</p>
 				</sec:authorize>
 				<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
 				<a href="<c:url value='/join'/>" class="btn btn-primary">회원가입</a>

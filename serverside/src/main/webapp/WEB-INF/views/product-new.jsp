@@ -63,7 +63,7 @@
 				</tr>
 				<tr>
 					<td>상품명</td>
-					<td><input type="text" name="productname" id="productName"></td>
+					<td><input type="text" name="name" id="productName"></td>
 				</tr>
 				<tr>
 					<td>가격</td>
@@ -72,7 +72,7 @@
 				<tr>
 					<td>상품설명</td>
 					<td><textarea rows="5" cols="60" name="content"
-							id="productDesc"></textarea></td>
+							id="productContent"></textarea></td>
 				</tr>
 				<tr>
 					<td>상품이미지</td>
@@ -96,7 +96,7 @@
 				<tr>
 					<td colspan="2" align="center">
 						<input type="text" name="no" value="${ item.no }">
-						<input type="text" value="1" name="m_ctg">
+						<input type="text" value="1" name="cid">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>
 						<a href="<c:url value='/product/product.do'/>" type="check" class="btn btn-default" onclick="check_onclick()">상품 목록으로 이동</a>

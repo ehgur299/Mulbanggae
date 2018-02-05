@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mul.product.model.CommonException;
+import com.mul.product.model.Paging;
 import com.mul.product.model.Product;
 import com.mul.product.model.UserInfo;
 import com.mul.product.service.FileService;
@@ -37,7 +39,7 @@ import com.mul.product.service.UserInfoService;
 @RequestMapping("/product")
 public class ProductWebController {
 	
-	private static final String UPLOAD_FOLDER = "/upload";
+	private static final String UPLOAD_FOLDER = "/product";
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
 	
@@ -50,191 +52,229 @@ public class ProductWebController {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@RequestMapping(value = "/product.do", method = RequestMethod.GET)
-	public String list(Model model) throws CommonException {
-		
-		UserInfo item = null;
-		
-		String id = this.getPrincipal();
-		item = userInfoService.detail(id);
-		
-		model.addAttribute("item", item);
-		
-		List<Product> product = null;
-		
-		product = productService.list();
-		
-		logger.debug(product);
-		
-		model.addAttribute("product", product);
-		return "product";
-	}
-	
-	@RequestMapping(value = "/detail.do", method = RequestMethod.GET)
-	public String detail(Model model, 
-			@RequestParam(value = "no", required=true)String no) throws CommonException,UnsupportedEncodingException
-	{
-		Product product = null;
-		String filename = null;
-		
-		product = productService.detail(no);
-		filename = product.getUrl();
-		
-		if(filename != null && !filename.trim().isEmpty()) {
-			filename = URLDecoder.decode(filename, "UTF-8");
+	// 글 목록 화면
+		@RequestMapping(value = "/product.do", method = RequestMethod.GET)
+		public String list(Model model, HttpServletRequest req) throws CommonException {
+			
+			int currentPageNo = 1;
+			int maxPost = 10;
+			
+			if(req.getParameter("pages") != null)
+				currentPageNo = Integer.parseInt(req.getParameter("pages"));
+			
+			Paging paging = new Paging(currentPageNo, maxPost);
+			
+			int offset = (paging.getCurrentpageNo() -1) * paging.getMaxPost();
+			
+			ArrayList<Product> page = new ArrayList<Product>();
+			page = (ArrayList<Product>) productService.list(offset, paging.getMaxPost());
+			
+			UserInfo item = null;
+			
+			String id = this.getPrincipal();
+			item = userInfoService.detail(id);
+			
+			model.addAttribute("item", item);
+			
+			List<Product> product = null;
+			
+			product = productService.list();
+			
+			logger.debug(product);
+			
+			model.addAttribute("product", product);
+			return "product";
 		}
 		
-		model.addAttribute("item", product);
-		model.addAttribute("filename", filename);
-		
-		return "product_detail";
-	}
-	
-	@RequestMapping( value="/product-new.do", method = RequestMethod.GET)
-	public String newProduct(Model model)
-	{
-		UserInfo item = null;
-		
-		String id = this.getPrincipal();
-		item = userInfoService.detail(id);
-		
-		model.addAttribute("item", item);
-		
-		return "product-new";
-	}
-	
-	@RequestMapping( value="/product-new.do", method = RequestMethod.POST)
-	public String newProduct(HttpServletRequest request,
-			Integer no,
-			String title,
-			String productname,
-			String price,
-			String content,
-			@RequestParam("url") MultipartFile url,
-			String m_ctg
-			)
-				throws CommonException, IllegalStateException, IOException
-		{
-			Product product = new Product();
-			product.setUser_no(no);
-			product.setTitle(title);
-			product.setProductname(productname);
-			product.setContent(content);
-			product.setPrice(price);
-			product.setM_ctg(m_ctg);
+		// 글 상세 화면
+		@RequestMapping(value = "/product-detail.do", method = RequestMethod.GET)
+		public String detail(Model model,
+				@RequestParam(value = "no", required=true) String no)
+						throws CommonException, Exception {
 			
+			String id = this.getPrincipal();
+			
+			if (id != null && !id.trim().isEmpty()) {
+				UserInfo item = userInfoService.detail(id);
+				model.addAttribute("userInfo", item);
+			}
+			
+			Product product = null;
+			String filename = null;
+			
+			product = productService.detail(no);
+			filename = product.getUrl();
+			if (filename != null && !filename.trim().isEmpty()) {
+				filename = URLDecoder.decode(filename, "UTF-8");
+			}
+			
+			model.addAttribute("item", product);
+			model.addAttribute("filename", filename);
+			
+			return "product-detail";
+		}
+		
+		// 글 작성 화면
+		@RequestMapping(value = "/product-new.do", method = RequestMethod.GET)
+		public String newNotice(Model model) {
+			
+			UserInfo item = null;
+			
+			String id = this.getPrincipal();
+			item = userInfoService.detail(id);
+			
+			model.addAttribute("item", item);
+			
+			return "product-new";
+		}
+		
+		// 글 작성 후, 글 목록 화면으로 이동
+		@RequestMapping(value = "/product-new.do", method = RequestMethod.POST)
+		public String newNotice(HttpServletRequest request,
+				Integer no,
+				String title,
+				String name,
+				Integer price,
+				String content,
+				Integer cid,
+				@RequestParam("url") MultipartFile url)
+						throws CommonException, Exception {
+			
+			Product product = new Product();
+			product.setUser_num(no);
+			product.setTitle(title);
+			product.setName(name);
+			product.setPrice(price);
+			product.setContent(content);
+			product.setCid(cid);
+			
+			// 최상위 경로 밑에 upload 폴더의 경로를 가져온다.
 			String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
 			
+			// MultipartFile 객체에서 파일명을 가져온다.
 			String originalName = url.getOriginalFilename();
 			
-			File dir = new File(path);
+			// upload 폴더가 없다면, upload 폴더 생성
+			File directory = new File(path);
+			if (!directory.exists()) {
+				directory.mkdirs();
+			}
 			
-			if( !dir.exists())
-				{
-					dir.mkdirs();
-				}
-			
-			if(url != null && !url.isEmpty())
-				{
-					int idx = originalName.lastIndexOf(".");
-					String filename = originalName.substring(0, idx);
-					String ext = originalName.substring(idx, originalName.length());
-					String uploadFilename = filename +
-											Long.toHexString(System.currentTimeMillis()) +
-											ext;
-					url.transferTo(new File(path, uploadFilename));
-					uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
-					product.setUrl(uploadFilename);
-				}
+			// url 객체를 이용하여, 파일을 서버에 전송
+			if (url != null && !url.isEmpty()) {
+				int idx = originalName.lastIndexOf(".");
+				String fname = originalName.substring(0, idx);
+				String ext = originalName.substring(idx, originalName.length());
+				String uploadFilename = fname
+						+ Long.toHexString(System.currentTimeMillis())
+						+ ext;
+				url.transferTo(new File(path, uploadFilename));
+				uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
+				product.setUrl(uploadFilename);
+			}
 			
 			productService.newProduct(product);
 			
-			return "redirect:/product.do";
+			return "redirect:product.do";
 		}
-	@RequestMapping(value="/product-remove.do", method = RequestMethod.GET)
-	public String remove(Model model, @RequestParam(value = "no", required = true) String no)
-	{
-		model.addAttribute("no",no);
 		
-		return "product-remove";
-	}
-	
-	@RequestMapping(value="/product-remove.do", method = RequestMethod.POST)
-	public String remove(HttpServletRequest request,
-						 @RequestParam(value = "no", required = true) String no,
-						 String password) throws CommonException, UnsupportedEncodingException
-		{
-			boolean isMatched = userInfoService.isProductMatched(no, password);
-			if(!isMatched)
-			{
-				return "redirect:/product/product-remove?no=" + no + "&action=error-password";
+		// 글 삭제 화면 확인
+		@RequestMapping(value = "/product-remove.do", method = RequestMethod.GET)
+		public String removeConfirm(Model model,
+				@RequestParam(value = "no", required = true) String no) {
+			
+			model.addAttribute("no", no);
+			
+			return "product-remove";
+		}
+		
+		// 글 삭제 후, 글 목록 화면으로 이동
+		@RequestMapping(value = "/product-remove.do", method = RequestMethod.POST)
+		public String remove(HttpServletRequest request,
+				@RequestParam(value = "no", required = true) String no,
+				String password)
+						throws CommonException, UnsupportedEncodingException {
+			
+			boolean isMatched = userInfoService.isProductMatched(Integer.parseInt(no), password);
+			if (!isMatched) {
+				return "redirect:/product/product-remove.do?no=" + no + "&action=error-password";
 			}
 			
-			String filename = productService.delete(no);
-			if(filename != null && !filename.trim().isEmpty())
-			{
+			String filename = productService.remove(no);
+			if (filename != null && !filename.trim().isEmpty()) {
 				fileService.remove(request, UPLOAD_FOLDER, filename);
 			}
 			
-			
 			return "redirect:/product.do";
 		}
-	
-	@RequestMapping(value="/product-modify", method = RequestMethod.GET)
-	public String modify(Model model, @RequestParam(value = "no", required = true) String no)
-	{
-		Product item = null;
 		
-		item = productService.detail(no);
-		
-		model.addAttribute("productitem",item);
-		
-		return "modify";
-	}
-	
-	@RequestMapping(value="/modify", method = RequestMethod.POST)
-	public String modify(HttpServletRequest request,
-			String no,
-			String title,
-			String content,
-			String productname,
-			String price,
-			String m_ctg,
-			@RequestParam("url") MultipartFile url,
-			String password) throws IllegalStateException, IOException
-	{
-		boolean isMatched = userInfoService.isProductMatched(no, password);
-		if(!isMatched)
-		{
-			return "redirect:/product/product-modify.do?no=" + no + "&action=error-password";
+		// 글 수정하기 화면
+		@RequestMapping(value = "/product-modify.do", method = RequestMethod.GET)
+		public String modify(Model model,
+				@RequestParam(value = "no", required = true) String no)
+						throws CommonException {
+			
+			Product item = null;
+			
+			item = productService.detail(no);
+			
+			model.addAttribute("item", item);
+			
+			return "modify";
 		}
 		
-		Product product = new Product();
-		product.setNo(no);
-		product.setTitle(title);
-		product.setProductname(productname);
-		product.setPrice(price);
-		product.setM_ctg(m_ctg);
-		
-		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
-		String originalName = url.getOriginalFilename();
-		
-		if(url != null && !url.isEmpty())
-		{
-			int idx = originalName.lastIndexOf(".");
-			String filename = originalName.substring(0, idx);
-			String ext = originalName.substring(idx, originalName.length());
-			String uploadFilename = filename +
-									Long.toHexString(System.currentTimeMillis()) +
-									ext;
-			url.transferTo(new File(path, uploadFilename));
-			uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
-			product.setUrl(uploadFilename);
+		// 글 수정 후, 글 목록 화면으로 이동
+		@RequestMapping(value = "/product-modify.do", method = RequestMethod.POST)
+		public String modify(HttpServletRequest request,
+				int no,
+				String title,
+				String name,
+				Integer price,
+				String content,
+				Integer cid,
+				@RequestParam("url") MultipartFile url,
+				String password)
+						throws CommonException, Exception {
+			
+			// 비밀번호를 비교해서 같지 않다면 오류메시지 출력
+			boolean isMatched = userInfoService.isProductMatched(no, password);
+			if (!isMatched) {
+				return "redirect:/product/product-modify.do?no=" + no + "&action=error-password";
+			}
+			
+			Product product = new Product();
+			product.setNo(no);
+			product.setTitle(title);
+			product.setName(name);
+			product.setPrice(price);
+			product.setContent(content);
+			product.setCid(cid);
+			
+			String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
+			String originalName = url.getOriginalFilename();
+			
+			// url 객체를 이용하여, 파일을 서버에 전송
+			if (url != null && !url.isEmpty()) {
+				int idx = originalName.lastIndexOf(".");
+				String fname = originalName.substring(0, idx);
+				String ext = originalName.substring(idx, originalName.length());
+				String uploadFilename = fname
+						+ Long.toHexString(System.currentTimeMillis())
+						+ ext;
+				url.transferTo(new File(path, uploadFilename));
+				uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
+				product.setUrl(uploadFilename);
+			}
+			
+			String oldFilename = productService.modify(product);
+			if (oldFilename != null && !oldFilename.trim().isEmpty()) {
+				fileService.remove(request, UPLOAD_FOLDER, oldFilename);
+			}
+			
+			return "redirect:product.do";
 		}
-		return "redirect:product.do";
-	}
-	
-	// 파일 내려받기
+		
+		// 파일 내려받기
 		@RequestMapping(value = "/download.do", method = RequestMethod.GET, params="filename")
 		public void download(HttpServletRequest request, 
 				HttpServletResponse response, String filename)
@@ -304,19 +344,20 @@ public class ProductWebController {
 			logger.debug(e.getMessage());
 			return "exception-common";
 		}
-	
-	private String getPrincipal() {
-		String username = null;
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Object principal = auth.getPrincipal();
 		
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
+		// 현재 접속한 사용자의 nickname 리턴
+		private String getPrincipal() {
+			String username = null;
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Object principal = auth.getPrincipal();
+			
+			if (principal instanceof UserDetails) {
+				username = ((UserDetails) principal).getUsername();
+			}
+			else {
+				username = principal.toString();
+			}
+			
+			return username;
 		}
-		else {
-			username = principal.toString();
-		}
-		
-		return username;
-	}
 }

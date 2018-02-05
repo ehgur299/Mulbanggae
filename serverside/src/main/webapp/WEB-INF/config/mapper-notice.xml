@@ -40,7 +40,7 @@
   	
   	<update id="update" parameterType="Notice">
   		UPDATE notice
-  		SET n_title = #{title}, n_content = #{content}, date = SYSDATE, n_url = #{url}
+  		SET n_title = #{title}, n_content = #{content}, n_date = SYSDATE, n_url = #{url}
   		WHERE n_number = #{no}
   	</update>
   	

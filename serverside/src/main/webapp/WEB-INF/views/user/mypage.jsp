@@ -214,10 +214,7 @@ star-input>.input.focus {
 					<thead>
 						<tr>
 							<td><span style='float: right'>
-									<button type="button" id="list" class="btn btn-default">목록</button>
-									<button type="button" id="modify" class="btn btn-default">수정</button>
-									<button type="button" id="delete" class="btn btn-default">삭제</button>
-									<button type="button" id="write" class="btn btn-default">글쓰기</button>
+									<button type="button" id="write" class="btn btn-default">확인</button>
 							</span></td>
 						</tr>
 					</thead>

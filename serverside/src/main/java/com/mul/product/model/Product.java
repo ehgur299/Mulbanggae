@@ -4,51 +4,42 @@ import java.util.Date;
 
 public class Product {
 
-	private String no;
+	private Integer no;
 	private String title;
-	private String productname;
-	private String price;
+	private String name;
+	private Integer price;
 	private String content;
 	private String url;
 	private Date date;
-
-	private Integer user_no;
-	private String m_ctg;
-	private String m_ctg_name;
+	
+	private UserInfo userInfo;
+	private Integer user_num;
+	private Integer cid;
+	private String cname;
 	
 	public Product() {}
 
-
-	public String getM_ctg_name() {
-		return m_ctg_name;
-	}
-
-
-	public void setM_ctg_name(String m_ctg_name) {
-		this.m_ctg_name = m_ctg_name;
-	}
-
-
-	public Product(String no, String title, String productname, String price, String content, String url, Date date,
-			Integer user_no, String m_ctg, String m_ctg_name) {
+	public Product(Integer no, String title, String name, Integer price, String content, String url, Date date,
+			UserInfo userInfo, Integer user_num, Integer cid, String cname) {
 		super();
 		this.no = no;
 		this.title = title;
-		this.productname = productname;
+		this.name = name;
 		this.price = price;
 		this.content = content;
 		this.url = url;
 		this.date = date;
-		this.user_no = user_no;
-		this.m_ctg = m_ctg;
-		this.m_ctg_name = m_ctg_name;
+		this.userInfo = userInfo;
+		this.user_num = user_num;
+		this.cid = cid;
+		this.cname = cname;
 	}
 
-	public String getNo() {
+	public Integer getNo() {
 		return no;
 	}
 
-	public void setNo(String no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
 
@@ -60,19 +51,19 @@ public class Product {
 		this.title = title;
 	}
 
-	public String getProductname() {
-		return productname;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductname(String productname) {
-		this.productname = productname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -100,35 +91,53 @@ public class Product {
 		this.date = date;
 	}
 
-	public Integer getUser_no() {
-		return user_no;
+	public UserInfo getUserInfo() {
+		return userInfo;
 	}
 
-	public void setUser_no(Integer user_no) {
-		this.user_no = user_no;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 
-	public String getM_ctg() {
-		return m_ctg;
+	public Integer getUser_num() {
+		return user_num;
 	}
 
-	public void setM_ctg(String m_ctg) {
-		this.m_ctg = m_ctg;
+	public void setUser_num(Integer user_num) {
+		this.user_num = user_num;
+	}
+
+	public Integer getCid() {
+		return cid;
+	}
+
+	public void setCid(Integer cid) {
+		this.cid = cid;
+	}
+
+	public String getCname() {
+		return cname;
+	}
+
+	public void setCname(String cname) {
+		this.cname = cname;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cid == null) ? 0 : cid.hashCode());
+		result = prime * result + ((cname == null) ? 0 : cname.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((m_ctg == null) ? 0 : m_ctg.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((no == null) ? 0 : no.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
-		result = prime * result + ((productname == null) ? 0 : productname.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
-		result = prime * result + ((user_no == null) ? 0 : user_no.hashCode());
+		result = prime * result + ((userInfo == null) ? 0 : userInfo.hashCode());
+		result = prime * result + ((user_num == null) ? 0 : user_num.hashCode());
 		return result;
 	}
 
@@ -141,6 +150,16 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
+		if (cid == null) {
+			if (other.cid != null)
+				return false;
+		} else if (!cid.equals(other.cid))
+			return false;
+		if (cname == null) {
+			if (other.cname != null)
+				return false;
+		} else if (!cname.equals(other.cname))
+			return false;
 		if (content == null) {
 			if (other.content != null)
 				return false;
@@ -151,10 +170,10 @@ public class Product {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (m_ctg == null) {
-			if (other.m_ctg != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!m_ctg.equals(other.m_ctg))
+		} else if (!name.equals(other.name))
 			return false;
 		if (no == null) {
 			if (other.no != null)
@@ -166,11 +185,6 @@ public class Product {
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
-		if (productname == null) {
-			if (other.productname != null)
-				return false;
-		} else if (!productname.equals(other.productname))
-			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -181,10 +195,15 @@ public class Product {
 				return false;
 		} else if (!url.equals(other.url))
 			return false;
-		if (user_no == null) {
-			if (other.user_no != null)
+		if (userInfo == null) {
+			if (other.userInfo != null)
 				return false;
-		} else if (!user_no.equals(other.user_no))
+		} else if (!userInfo.equals(other.userInfo))
+			return false;
+		if (user_num == null) {
+			if (other.user_num != null)
+				return false;
+		} else if (!user_num.equals(other.user_num))
 			return false;
 		return true;
 	}
@@ -196,8 +215,8 @@ public class Product {
 		builder.append(no);
 		builder.append(", title=");
 		builder.append(title);
-		builder.append(", productname=");
-		builder.append(productname);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append(", price=");
 		builder.append(price);
 		builder.append(", content=");
@@ -206,10 +225,14 @@ public class Product {
 		builder.append(url);
 		builder.append(", date=");
 		builder.append(date);
-		builder.append(", user_no=");
-		builder.append(user_no);
-		builder.append(", m_ctg=");
-		builder.append(m_ctg);
+		builder.append(", userInfo=");
+		builder.append(userInfo);
+		builder.append(", user_num=");
+		builder.append(user_num);
+		builder.append(", cid=");
+		builder.append(cid);
+		builder.append(", cname=");
+		builder.append(cname);
 		builder.append("]");
 		return builder.toString();
 	}

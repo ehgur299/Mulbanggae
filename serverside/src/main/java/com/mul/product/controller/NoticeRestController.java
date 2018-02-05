@@ -226,7 +226,7 @@ public class NoticeRestController {
 			String title,
 			String content,
 			Date date,
-			@RequestParam("attachment") MultipartFile attachment,
+			@RequestParam("url") MultipartFile url,
 			String pwd,
 			UriComponentsBuilder ucBuilder)
 					throws CommonException, Exception {
@@ -245,17 +245,17 @@ public class NoticeRestController {
 		
 
 		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
-		String originalName = attachment.getOriginalFilename();
+		String originalName = url.getOriginalFilename();
 
 		// attachment 객체를 이용하여, 파일을 서버에 전송
-		if (attachment != null && !attachment.isEmpty()) {
+		if (url != null && !url.isEmpty()) {
 			int idx = originalName.lastIndexOf(".");
 			String name = originalName.substring(0, idx);
 			String ext = originalName.substring(idx, originalName.length());
 			String uploadFilename = name
 					+ Long.toHexString(System.currentTimeMillis())
 					+ ext;
-			attachment.transferTo(new File(path, uploadFilename));
+			url.transferTo(new File(path, uploadFilename));
 			uploadFilename = URLEncoder.encode(uploadFilename, "UTF-8");
 			notice.setUrl(uploadFilename);
 		}
