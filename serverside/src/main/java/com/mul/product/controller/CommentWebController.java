@@ -21,7 +21,7 @@ import com.mul.product.service.CommentService;
 import com.mul.product.service.UserInfoService;
 
 @Controller
-@RequestMapping("/comment/*")
+@RequestMapping("/comment")
 public class CommentWebController 
 {
 	@Autowired
@@ -30,18 +30,19 @@ public class CommentWebController
 	@Autowired
 	private UserInfoService userInfoService;
 	
+	// 글 목록 화면
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) throws CommonException
 	{
 		List<Comment> comment = null;
 		
-		comment = commentService.list();
+		comment = commentService.selectAll();
 		
 		model.addAttribute("comment", comment);
 		return "list";
 	}
 	
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	@RequestMapping(value = "/comment-new", method = RequestMethod.GET)
 	public String commentWrite(Model model)
 	{
 		String id = this.getPrincipal();
@@ -49,31 +50,32 @@ public class CommentWebController
 		
 		model.addAttribute("no",userInfo.getNo());
 		model.addAttribute("nickname", userInfo.getNickname());
-		return "write";
+		return "comment-new";
 	}
 	
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	@RequestMapping(value = "/comment-new", method = RequestMethod.POST)
 	public String commentWrite(HttpServletRequest request,
-							   Integer product_no,
-							   String content
-							   )
-	{
-		Comment comment = null;
-		comment.setProduct_no(product_no);
-		comment.setCmt_content(content);
-		String id = this.getPrincipal();
-		UserInfo userInfo = userInfoService.detail(id);
-		comment.setUser_no(userInfo.getId());
+			Integer no,
+			Integer product_num,
+			String cmt_content)
+					throws CommonException, Exception {
 		
-		return "redirect:list";
+		Comment comment = new Comment();
+		comment.setUser_num(no);
+		comment.setProduct_num(product_num);
+		comment.setCmt_content(cmt_content);
+		
+		return "product-detail";
 	}
 	
-	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String commentModify(Model model,@RequestParam(value = "no", required= true)String no)
-	{
+	@RequestMapping(value = "/comment-modify", method = RequestMethod.GET)
+	public String commentModify(Model model,
+			@RequestParam(value = "no", required= true) String no)
+					throws CommonException {
+	
 		Comment comment = null;
 		
-		comment = commentService.detail(Integer.parseInt(no));
+		comment = commentService.detail(no);
 		
 		model.addAttribute("comment", comment);
 		
@@ -86,7 +88,6 @@ public class CommentWebController
 			)
 	{
 		Comment comment = null;
-		comment.setProduct_no(Integer.parseInt(product_no));
 		comment.setCmt_content(content);
 		
 		return "redirect:list";
@@ -101,22 +102,6 @@ public class CommentWebController
 		return "delete";
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String commentDelete(HttpServletRequest request,
-			@RequestParam(value="no", required = true) String no,
-			String password)
-	{
-		boolean isMatched = commentService.isCommentMatced(Integer.parseInt(no), password);
-		
-		if(!isMatched)
-		{
-			return "redirect:/comment/delete?no=" + no + "&action=error-password";
-		}
-		
-		commentService.delete(Integer.parseInt(no));
-		
-		return "redirect:/list";
-	}
 	
 	private String getPrincipal() {
 		String username = null;

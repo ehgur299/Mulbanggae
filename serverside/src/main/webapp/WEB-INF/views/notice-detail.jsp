@@ -67,6 +67,22 @@
 		</c:if>
 		</div>
 		
+		<hr />
+		
+		<textarea id="commentParentText" class="form-control col-lg-12" style="width: 100%" rows="4"></textarea>
+						</span></td>
+					</tr>
+				</table>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<td><span style='float: right'>
+									<button type="button" id="write" class="btn btn-default">확인</button>
+							</span></td>
+						</tr>
+					</thead>
+				</table>
+				
 		<div class="text-center">
 			<ul class="pagination">
 				<li><a href="#">1</a></li>

@@ -2,41 +2,63 @@ package com.mul.product.model;
 
 import java.util.Date;
 
-public class Comment 
-{
+public class Comment {
+
+	Integer cmt_num;
+	Integer product_num;
+	Integer user_num;
+	String cmt_content;
+	Date cmt_date;
+	
 	public Comment() {}
 	
-	public Comment(int cmt_no, int product_no, String user_no, String cmt_content, Date cmt_date) {
+	public Comment(Integer cmt_num, Integer product_num, Integer user_num, String cmt_content, Date cmt_date) {
 		super();
-		this.cmt_no = cmt_no;
-		this.product_no = product_no;
-		this.user_no = user_no;
+		this.cmt_num = cmt_num;
+		this.product_num = product_num;
+		this.user_num = user_num;
 		this.cmt_content = cmt_content;
 		this.cmt_date = cmt_date;
 	}
 
-	int cmt_no;
-	int product_no;
-	String user_no;
-	String cmt_content;
-	Date cmt_date;
-	
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Comment [cmt_no=");
-		builder.append(cmt_no);
-		builder.append(", product_no=");
-		builder.append(product_no);
-		builder.append(", user_no=");
-		builder.append(user_no);
-		builder.append(", cmt_content=");
-		builder.append(cmt_content);
-		builder.append(", cmt_date=");
-		builder.append(cmt_date);
-		builder.append("]");
-		return builder.toString();
+	public Integer getCmt_num() {
+		return cmt_num;
+	}
+
+	public void setCmt_num(Integer cmt_num) {
+		this.cmt_num = cmt_num;
+	}
+
+	public Integer getProduct_num() {
+		return product_num;
+	}
+
+	public void setProduct_num(Integer product_num) {
+		this.product_num = product_num;
+	}
+
+	public Integer getUser_num() {
+		return user_num;
+	}
+
+	public void setUser_num(Integer user_num) {
+		this.user_num = user_num;
+	}
+
+	public String getCmt_content() {
+		return cmt_content;
+	}
+
+	public void setCmt_content(String cmt_content) {
+		this.cmt_content = cmt_content;
+	}
+
+	public Date getCmt_date() {
+		return cmt_date;
+	}
+
+	public void setCmt_date(Date cmt_date) {
+		this.cmt_date = cmt_date;
 	}
 
 	@Override
@@ -45,8 +67,9 @@ public class Comment
 		int result = 1;
 		result = prime * result + ((cmt_content == null) ? 0 : cmt_content.hashCode());
 		result = prime * result + ((cmt_date == null) ? 0 : cmt_date.hashCode());
-		result = prime * result + cmt_no;
-		result = prime * result + product_no;
+		result = prime * result + ((cmt_num == null) ? 0 : cmt_num.hashCode());
+		result = prime * result + ((product_num == null) ? 0 : product_num.hashCode());
+		result = prime * result + ((user_num == null) ? 0 : user_num.hashCode());
 		return result;
 	}
 
@@ -69,43 +92,38 @@ public class Comment
 				return false;
 		} else if (!cmt_date.equals(other.cmt_date))
 			return false;
-		if (cmt_no != other.cmt_no)
+		if (cmt_num == null) {
+			if (other.cmt_num != null)
+				return false;
+		} else if (!cmt_num.equals(other.cmt_num))
 			return false;
-		if (product_no != other.product_no)
+		if (product_num == null) {
+			if (other.product_num != null)
+				return false;
+		} else if (!product_num.equals(other.product_num))
 			return false;
-		if (user_no != other.user_no)
+		if (user_num == null) {
+			if (other.user_num != null)
+				return false;
+		} else if (!user_num.equals(other.user_num))
 			return false;
 		return true;
 	}
 
-	public int getCmt_no() {
-		return cmt_no;
-	}
-	public void setCmt_no(int cmt_no) {
-		this.cmt_no = cmt_no;
-	}
-	public int getProduct_no() {
-		return product_no;
-	}
-	public void setProduct_no(int product_no) {
-		this.product_no = product_no;
-	}
-	public String getUser_no() {
-		return user_no;
-	}
-	public void setUser_no(String user_no) {
-		this.user_no = user_no;
-	}
-	public String getCmt_content() {
-		return cmt_content;
-	}
-	public void setCmt_content(String cmt_content) {
-		this.cmt_content = cmt_content;
-	}
-	public Date getCmt_date() {
-		return cmt_date;
-	}
-	public void setCmt_date(Date cmt_date) {
-		this.cmt_date = cmt_date;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Comment [cmt_num=");
+		builder.append(cmt_num);
+		builder.append(", product_num=");
+		builder.append(product_num);
+		builder.append(", user_num=");
+		builder.append(user_num);
+		builder.append(", cmt_content=");
+		builder.append(cmt_content);
+		builder.append(", cmt_date=");
+		builder.append(cmt_date);
+		builder.append("]");
+		return builder.toString();
 	}
 }

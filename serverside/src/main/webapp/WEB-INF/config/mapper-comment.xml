@@ -4,45 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.mul.product.dao.CommentDaoImpl">
   	<insert id="insert" parameterType="Comment">
-  		<selectKey keyProperty="cmt_no" resultType="Integer" order="BEFORE">
-  			SELECT comment_seq.NEXTVAL cmt_no FROM DUAL
+  		<selectKey keyProperty="cmt_num" resultType="Integer" order="BEFORE">
+  			SELECT comment_seq.NEXTVAL cmt_num FROM DUAL
   		</selectKey>
   		INSERT INTO M_Comment(cmt_number, product_number, user_number, cmt_content, cmt_date)
-  		VALUES(#{cmt_no}, #{product_no}, #{user_no}, #{cmt_content}, SYSDATE)
+  		VALUES(#{cmt_num}, #{product_num}, #{user_num}, #{cmt_content}, SYSDATE)
   	</insert>
   	
-  	<select id="select" parameterType="String" resultType="Comment">
-  	SELECT *
-  	FROM M_Comment
-  	WHERE cmt_number = #{cmt_no}
-  	</select>
+  	<resultMap type="Comment" id="CommentResultMap">
+  		<id property="cmt_num" column="cmt_number"/>
+  		<result property="cmt_content" column="cmt_content"/>
+  		<result property="cmt_date" column="cmt_date"/>
+  		<result property="product_num" column="product_number"/>
+  		<result property="user_num" column="user_number"/>
+  		<result property="userInfo.nickname" column="user_nickname"/>
+  	</resultMap>
   
-  	<select id="selectAll" resultType="Comment">
-  	SELECT *
-  	FROM M_Comment
-  	ORDER BY cmt_Number DESC
-  	</select>
-  	
-  	<select id="count" resultType="Integer">
-  		SELECT count(*) FROM M_Comment
+  	<select id="selectAll" resultMap="CommentResultMap">
+  	SELECT c.cmt_number, c.cmt_content, c.cmt_date, u.user_nickname
+  	FROM M_Comment c, user_info u
+  	WHERE c.user_number = u.user_number AND product_number = #{product_num} 
+  	ORDER BY c.cmt_number DESC
   	</select>
   
   	<update id="update" parameterType="Comment">
   		UPDATE M_Comment
-  		SET cmt_content= #{cmt_content}, cmt_date = SYSDATE
-  		WHERE cmt_number = #{cmt_no}, product_number = #{product_no}, user_number = #{user_no}
+  		SET cmt_content = #{cmt_content}, cmt_date = SYSDATE
+  		WHERE cmt_number = #{cmt_num}
   	</update>
   	
-  	<delete id="delete" parameterType="Integer">
-  		DELETE FROM M_Comment WHRE cmt_number = #{cmt_no}
+  	<delete id="delete" parameterType="String">
+  		DELETE FROM M_Comment WHERE cmt_number = #{cmt_num}
   	</delete>
-  
-  
-  	<resultMap type="Comment" id="CommentResultMap">
-  	<id column="cmt_number" property="cmt_no"/>
-  	<result column="cmt_content" property="cmt_content"/>
-  	<result column="cmt_date" property="cmt_date"/>
-  	<result column="product_number" property="product_no"/>
-  	<result column="user_number" property="user_no"/>
-  	</resultMap>
   </mapper>
