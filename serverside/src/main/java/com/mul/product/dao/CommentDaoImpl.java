@@ -3,16 +3,21 @@ package com.mul.product.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mul.product.model.Comment;
 import com.mul.product.model.CommonException;
+import com.mul.product.model.Product;
 
 @Repository
 public class CommentDaoImpl implements CommentDao {
 
-	private static final String MAPPER_COMMENT = CommentDao.class.getName();
+	private Logger logger = LogManager.getLogger(this.getClass());
+	
+	private static final String MAPPER_NAMESPACE = CommentDaoImpl.class.getName();
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -22,38 +27,41 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public void insert(Comment comment) throws CommonException 
 	{
-		sqlSession.insert(MAPPER_COMMENT + ".insert", comment);
+		sqlSession.insert(MAPPER_NAMESPACE + ".insert", comment);
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public Comment select(String no) throws CommonException {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(MAPPER_COMMENT + ".select", no);
 	}
 
 	@Override
 	public List<Comment> selectAll() throws CommonException {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(MAPPER_COMMENT + ".selectAll");
+		return sqlSession.selectList(MAPPER_NAMESPACE + ".selectAll");
 	}
 
 	@Override
-	public int commentCount() throws CommonException 
-	{
-		return sqlSession.selectOne(MAPPER_COMMENT + ".count");
-	}
-
-	@Override
-	public void modify(String no) throws CommonException {
+	public void update(Comment comment) throws CommonException {
 		// TODO Auto-generated method stub
-		sqlSession.update(MAPPER_COMMENT + "update", no);
+		sqlSession.update(MAPPER_NAMESPACE + "update", comment);
 	}
 
 	@Override
 	public void delete(String no) throws CommonException {
 		// TODO Auto-generated method stub
-		sqlSession.delete(MAPPER_COMMENT + "delete", no);
+		sqlSession.delete(MAPPER_NAMESPACE + "delete", no);
+	}
+
+	@Override
+	public Comment select(String no) throws CommonException {
+		Comment comment = null;
+		
+		try {
+			comment = sqlSession.selectOne(MAPPER_NAMESPACE + ".select", no);
+			
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+			throw new CommonException("E01: 댓글 검색 실패");
+		}
+		
+		return comment;
 	}
 
 }

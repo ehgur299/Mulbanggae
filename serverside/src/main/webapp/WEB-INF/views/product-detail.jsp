@@ -73,6 +73,29 @@
 			</div>
 				<!-- /.col-lg-4 -->
 			</div>
+			
+			<hr />
+			
+			<form action="<c:url value='/comment/comment-new.do'/>" method="post" enctype="multipart/form-data">
+				<table class="table table-bordered">
+				<tr>
+					<td>작성자</td>
+					<td>${ item.nickname }(${ item.id })</td>
+				</tr>
+					<tr>
+					<td>내용</td>
+					<td><textarea rows="5" cols="60" name="content"
+							id="noticeContent"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="hidden" name="no" value="${ item.no }">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<button type="submit" class="btn btn-default">등록</button>
+					</td>
+				</tr>
+				</table>
+			</form>
 			<!--/row-->
 			<!--/.col-xs-12.col-sm-9-->
 

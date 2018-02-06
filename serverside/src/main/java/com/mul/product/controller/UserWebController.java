@@ -155,7 +155,9 @@ public class UserWebController {
 			user.setPwd(encoder.encode(newPassword));
 			user.setNickname(nickname);
 			
-			return "redirect:/user/setting";
+			userInfoService.modify(user);
+			
+			return "redirect:/user/mypage";
 		}
 		
 		// 현재 접속한 사용자의 id 리턴

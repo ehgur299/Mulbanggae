@@ -10,9 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mul.product.dao.CommentDao;
 import com.mul.product.dao.NoticeDao;
 import com.mul.product.dao.ProductDao;
 import com.mul.product.dao.UserInfoDao;
+import com.mul.product.model.Comment;
 import com.mul.product.model.CommonException;
 import com.mul.product.model.Notice;
 import com.mul.product.model.Product;
@@ -152,4 +154,5 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		return oldFilename;
 	}
+
 }

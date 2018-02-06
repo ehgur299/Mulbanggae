@@ -95,8 +95,8 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="text" name="no" value="${ item.no }">
-						<input type="text" value="1" name="cid">
+						<input type="hidden" name="no" value="${ item.no }">
+						<input type="hidden" value="1" name="cid">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>
 						<a href="<c:url value='/product/product.do'/>" type="check" class="btn btn-default" onclick="check_onclick()">상품 목록으로 이동</a>

@@ -135,6 +135,8 @@ star-input>.input.focus {
 
 			<div class="col-xs-12 col-sm-9">
 				<h1>${ item.nickname }(${ item.id })</h1>
+				<a href="<c:url value='/user/modify'/>" class="btn btn-default">회원 수정</a>
+				<a href="<c:url value='/user/delete'/>" class="btn btn-default">회원 탈퇴</a>
 				
 				<hr />
 				
@@ -186,40 +188,6 @@ star-input>.input.focus {
 					<!-- /.col-lg-4 -->
 				</div>
 				<!--/row-->
-				
-				<table id="commentTable" class="table table-condensed"></table>
-				<table class="table table-condensed">
-					<tr>
-						<td><span class="form-inline" role="form"> <span
-								class="star-input"> <span class="input"> <input
-										type="radio" name="star-input" value="1" id="p1"><label
-										for="p1">1</label> <input type="radio" name="star-input"
-										value="2" id="p2"><label for="p2">2</label> <input
-										type="radio" name="star-input" value="3" id="p3"><label
-										for="p3">3</label> <input type="radio" name="star-input"
-										value="4" id="p4"><label for="p4">4</label> <input
-										type="radio" name="star-input" value="5" id="p5"><label
-										for="p5">5</label>
-								</span> <output for="star-input">
-										<b>0</b>점
-									</output>
-							</span>
-
-								<hr /> <textarea id="commentParentText"
-									class="form-control col-lg-12" style="width: 100%" rows="4"></textarea>
-						</span></td>
-					</tr>
-				</table>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<td><span style='float: right'>
-									<button type="button" id="write" class="btn btn-default">확인</button>
-							</span></td>
-						</tr>
-					</thead>
-				</table>
-
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 
