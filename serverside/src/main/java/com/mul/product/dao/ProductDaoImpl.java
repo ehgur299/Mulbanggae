@@ -1,5 +1,6 @@
 package com.mul.product.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -59,6 +60,22 @@ public class ProductDaoImpl implements ProductDao {
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
 			throw new CommonException("E02: 게시물 전체 검색 실패");
+		}
+		
+		return list;
+	}
+	
+	public List<Product> selectPaging(HashMap<String, Integer> hashmap) throws CommonException
+	{
+		List<Product> list = null;
+		
+		try
+		{
+			list = sqlSession.selectList(MAPPER_NAMESPACE + ".selectPaging", hashmap);
+		} catch(Exception e)
+		{
+			logger.debug(e.getMessage());
+			throw new CommonException("");
 		}
 		
 		return list;

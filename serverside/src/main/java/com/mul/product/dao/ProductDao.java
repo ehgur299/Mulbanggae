@@ -1,5 +1,6 @@
 package com.mul.product.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.mul.product.model.CommonException;
@@ -15,6 +16,8 @@ public interface ProductDao {
 	
 	// 전체 글 가져오기
 	public List<Product> selectAll() throws CommonException;
+	
+	public List<Product> selectPaging(HashMap<String, Integer> hashmap) throws CommonException;
 	
 	// 전체 글 개수 가져오기
 	public int ProductCount() throws CommonException;

@@ -3,6 +3,7 @@ package com.mul.product.service;
 import java.util.List;
 
 import com.mul.product.model.CommonException;
+import com.mul.product.model.Paging;
 import com.mul.product.model.Product;
 
 public interface ProductService {
@@ -25,4 +26,5 @@ public interface ProductService {
 	// 게시물을 삭제한다. (삭제하는 파일명을 리턴)
 	public String remove(String no) throws CommonException;
 	
+	public List<Product> list(int offset, int pagingmax) throws CommonException;
 }

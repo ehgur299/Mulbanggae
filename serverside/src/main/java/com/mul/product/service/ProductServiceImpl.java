@@ -1,5 +1,6 @@
 package com.mul.product.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mul.product.dao.ProductDao;
 import com.mul.product.model.CommonException;
+import com.mul.product.model.Paging;
 import com.mul.product.model.Product;
 
 @Service
@@ -62,6 +64,15 @@ public class ProductServiceImpl implements ProductService {
 		dao.delete(no);
 		
 		return filename;
+	}
+	
+	public List<Product> list(int offset, int pagingmax) throws CommonException
+	{
+		HashMap<String, Integer> hashmap = new HashMap();
+		hashmap.put("offset", offset);
+		hashmap.put("pagingmax", pagingmax);
+		
+		return dao.selectPaging(hashmap);
 	}
 
 }

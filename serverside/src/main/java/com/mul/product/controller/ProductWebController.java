@@ -66,8 +66,8 @@ public class ProductWebController {
 			
 			int offset = (paging.getCurrentpageNo() -1) * paging.getMaxPost();
 			
-			ArrayList<Product> page = new ArrayList<Product>();
-			page = (ArrayList<Product>) productService.list(offset, paging.getMaxPost());
+			List<Product> page = null;
+			page = productService.list(offset, paging.getMaxPost());
 			
 			UserInfo item = null;
 			
@@ -76,13 +76,9 @@ public class ProductWebController {
 			
 			model.addAttribute("item", item);
 			
-			List<Product> product = null;
+			logger.debug(page);
 			
-			product = productService.list();
-			
-			logger.debug(product);
-			
-			model.addAttribute("product", product);
+			model.addAttribute("product", page);
 			return "product";
 		}
 		

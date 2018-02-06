@@ -42,6 +42,10 @@
 		FROM M_Product p, user_info u
 		WHERE p.user_number = u.user_number ORDER BY p.product_number DESC
 	</select>
+	
+	<select id="selectPaging" parameterType="HashMap" resultMap="productResultMap">
+		SELECT * FROM M_Product ORDER BY product_number DESC LIMIT #{offset},#{pagingmax}
+	</select>
 
 	<select id="count" resultMap="productResultMap">
 		SELECT COUNT(*) cnt FROM m_product WHERE 1=1
