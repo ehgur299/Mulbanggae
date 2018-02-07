@@ -43,5 +43,10 @@ public class CommentServiceImpl implements CommentService {
 	public Comment detail(String no) throws CommonException {
 		return dao.select(no);
 	}
+	
+	public List<Comment> selectbyProduct(String no) throws CommonException
+	{
+		return dao.selectbyProduct(no);
+	}
 
 }

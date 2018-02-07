@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mul.product.model.Comment;
 import com.mul.product.model.CommonException;
 import com.mul.product.model.Paging;
 import com.mul.product.model.Product;
 import com.mul.product.model.UserInfo;
+import com.mul.product.service.CommentService;
 import com.mul.product.service.FileService;
 import com.mul.product.service.ProductService;
 import com.mul.product.service.UserInfoService;
@@ -52,6 +54,8 @@ public class ProductWebController {
 	@Autowired
 	private UserInfoService userInfoService;
 	
+	@Autowired
+	private CommentService commentService;
 	// 글 목록 화면
 		@RequestMapping(value = "/product.do", method = RequestMethod.GET)
 		public String list(Model model, HttpServletRequest req) throws CommonException {
@@ -94,6 +98,9 @@ public class ProductWebController {
 				filename = URLDecoder.decode(filename, "UTF-8");
 			}
 			
+			List<Comment> commentlist = commentService.selectbyProduct(no);
+			
+			model.addAttribute("commentlist", commentlist);
 			model.addAttribute("item", product);
 			model.addAttribute("filename", filename);
 			

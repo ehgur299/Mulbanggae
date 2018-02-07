@@ -23,4 +23,5 @@ public interface CommentService
 	// 게시물 하나를 가져온다.
 	public Comment detail(String no) throws CommonException;
 		
+	public List<Comment> selectbyProduct(String no) throws CommonException;
 }

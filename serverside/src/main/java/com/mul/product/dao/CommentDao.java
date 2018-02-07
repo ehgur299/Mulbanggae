@@ -22,4 +22,6 @@ public interface CommentDao
 	
 	// 글 삭제하기
 	public void delete(String no) throws CommonException;
+	
+	public List<Comment> selectbyProduct(String no) throws CommonException;
 }

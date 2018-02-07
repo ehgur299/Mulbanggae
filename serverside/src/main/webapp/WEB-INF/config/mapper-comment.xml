@@ -36,4 +36,11 @@
   	<delete id="delete" parameterType="String">
   		DELETE FROM M_Comment WHERE cmt_number = #{cmt_num}
   	</delete>
+  	
+  	<select id="selectbyProduct" parameterType="Integer" resultMap="CommentResultMap">
+  		SELECT c.cmt_number, c.cmt_content, c.cmt_date, u.user_nickname
+  		FORM M_Comment c, user_info u
+  		WHERE product_number = #{no} 
+  		ORDER BY cmt_number DESC
+  	</select>
   </mapper>

@@ -63,5 +63,14 @@ public class CommentDaoImpl implements CommentDao {
 		
 		return comment;
 	}
+	
+	public List<Comment> selectbyProduct(String no) throws CommonException
+	{
+		List<Comment> list = null;
+		
+		list = sqlSession.selectList(MAPPER_NAMESPACE + ".selectbyProduct",Integer.parseInt(no));
+		
+		return list;
+	}
 
 }
