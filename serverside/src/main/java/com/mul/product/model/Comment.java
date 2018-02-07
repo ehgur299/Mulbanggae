@@ -4,21 +4,24 @@ import java.util.Date;
 
 public class Comment {
 
-	Integer cmt_num;
-	Integer product_num;
-	Integer user_num;
-	String cmt_content;
-	Date cmt_date;
+	private Integer cmt_num;
+	private Integer product_num;
+	private Integer user_num;
+	private String cmt_content;
+	private Date cmt_date;
+	private UserInfo userInfo;
 	
 	public Comment() {}
-	
-	public Comment(Integer cmt_num, Integer product_num, Integer user_num, String cmt_content, Date cmt_date) {
+
+	public Comment(Integer cmt_num, Integer product_num, Integer user_num, String cmt_content, Date cmt_date,
+			UserInfo userInfo) {
 		super();
 		this.cmt_num = cmt_num;
 		this.product_num = product_num;
 		this.user_num = user_num;
 		this.cmt_content = cmt_content;
 		this.cmt_date = cmt_date;
+		this.userInfo = userInfo;
 	}
 
 	public Integer getCmt_num() {
@@ -61,6 +64,14 @@ public class Comment {
 		this.cmt_date = cmt_date;
 	}
 
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,6 +80,7 @@ public class Comment {
 		result = prime * result + ((cmt_date == null) ? 0 : cmt_date.hashCode());
 		result = prime * result + ((cmt_num == null) ? 0 : cmt_num.hashCode());
 		result = prime * result + ((product_num == null) ? 0 : product_num.hashCode());
+		result = prime * result + ((userInfo == null) ? 0 : userInfo.hashCode());
 		result = prime * result + ((user_num == null) ? 0 : user_num.hashCode());
 		return result;
 	}
@@ -102,6 +114,11 @@ public class Comment {
 				return false;
 		} else if (!product_num.equals(other.product_num))
 			return false;
+		if (userInfo == null) {
+			if (other.userInfo != null)
+				return false;
+		} else if (!userInfo.equals(other.userInfo))
+			return false;
 		if (user_num == null) {
 			if (other.user_num != null)
 				return false;
@@ -123,7 +140,10 @@ public class Comment {
 		builder.append(cmt_content);
 		builder.append(", cmt_date=");
 		builder.append(cmt_date);
+		builder.append(", userInfo=");
+		builder.append(userInfo);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

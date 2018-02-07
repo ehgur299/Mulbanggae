@@ -87,46 +87,64 @@
 
 				<hr />
 
-				<form name="frm" action="<c:url value='/comment/comment-new.do'/>" method="post">
-				<table class="table table-bordered">
-					<tr>
-						<td>댓글</td>
-					<td><textarea rows="5" cols="60" name="cmt_content"
-								id="commentContent"></textarea></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input name="no" value="${ userInfo.no }">
-						<input name="product_num" value="${ item.no }">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						<button type="submit" class="btn btn-default">등록</button>
-					</td>
-				</tr>
-			</table>
-			</form>
-			<!--/row-->
-			<!--/.col-xs-12.col-sm-9-->
+				<c:forEach items="${ commentlist }" var="commentlist">
+					<table class="table table-bordered">
+						<tr>
+							<th>작성자</th>
+							<th>${ commentlist.userInfo.nickname }</th>
+						</tr>
+						<tr>
+							<th>날짜</th>
+							<th>${ commentlist.cmt_date}</th>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<th>${ commentlist.cmt_content}</th>
+						</tr>
+					</table>
+
+				</c:forEach>
+
+				<form action="<c:url value='/comment/comment-new.do'/>"
+					method="post">
+					<table class="table table-bordered">
+						<tr>
+							<td>댓글</td>
+							<td><textarea rows="5" cols="60" name="cmt_content"
+									id="commentContent"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><input type="hidden"
+								name="no" value="${ userInfo.no }"> <input type="hidden"
+								name="product_num" value="${ item.no }"> <input
+								type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}">
+								<button type="submit" class="btn btn-default">등록</button></td>
+						</tr>
+					</table>
+				</form>
+				<!--/row-->
+				<!--/.col-xs-12.col-sm-9-->
+
+				<div class="text-center">
+					<ul class="pagination">
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+					</ul>
+				</div>
+			</div>
 
 			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 				<div class="list-group">
 					<a class="list-group-item active"
-							href="<c:url value='/product/product.do'/>">전체 상품 보기</a>
+						href="<c:url value='/product/product.do'/>">전체 상품 보기</a>
 				</div>
 			</div>
 			<!--/.sidebar-offcanvas-->
 		</div>
-		
-		<div class="text-center">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
-		
 	</div>
-
 </body>
 </html>

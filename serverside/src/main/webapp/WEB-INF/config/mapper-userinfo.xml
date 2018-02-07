@@ -32,7 +32,7 @@
 			(SELECT user_info_type.user_number, user_type.ut_number, user_type.ut_type
 			FROM user_info_type, user_type
 			WHERE user_type.ut_number = user_info_type.ut_number) ut
-		WHERE u.user_number = ut.user_number AND u.user_number = #{no}
+		WHERE u.user_number = ut.user_number AND u.user_number = #{uid}
 	</select>
 	
 	<insert id="insert" parameterType="UserInfo">

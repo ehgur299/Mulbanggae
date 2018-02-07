@@ -1,3 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원 탈퇴</title>
+</head>
+<body>
+	<h1>정말로 탈퇴하시겠습니까?</h1>
+	<form action='<c:url value='/user/delete'/>' method="post">
+		<label>비밀번호 <input type="password" name="password"></label>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<input type="submit" value='탈퇴하기'>
+	</form>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,7 +33,7 @@
 			<h3>물건파는 방구석 개인들</h3>
 			<div class="text-right">
 				<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
-					<p>${ userInfo.nickname }(${ userInfo.id })님안녕하세요!</p>
+					<p>${ item.nickname }(${ item.id })님안녕하세요!</p>
 				</sec:authorize>
 				<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
 					<a href="<c:url value='/join'/>" class="btn btn-primary">회원가입</a>
@@ -33,7 +48,7 @@
 				<ul class="nav nav-justified">
 					<li class="active"><a href="<c:url value='/'/>">Home</a></li>
 					<li><a href="<c:url value='/product/product.do'/>">상품게시판</a></li>
-					<li><a href="<c:url value='/notice/notice.do'/>">공지사항</a></li>
+					<li><a href="<c:url value='notice'/>">공지사항</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -42,45 +57,26 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 
 			<div class="col-xs-12 col-sm-9">
-
-				<h1>게시글 삭제</h1>
-				<form action="<c:url value='/product/product-remove.do'/>"
-					method="post">
-					<c:if test="${ param.action == 'error-password' }">
-						<p>비밀번호를 잘못 입력했습니다.</p>
-					</c:if>
-					<table>
+				<h1>정말로 탈퇴하시겠습니까?</h1>
+					<form action='<c:url value='/user/delete'/>' method="post">
+						<table class="table table-bordered">
 						<tr>
-							<td><input type="hidden" name="no" value="${ no }">
-							</td>
+						<td>비밀번호</td>
+						</tr> 
+						<tr>
+						<td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td>비밀번호</td>
-							<td><input type="password" name="password"></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}"> <input type="submit"
-								value="삭제하기"></td>
-						</tr>
-					</table>
-				</form>
-				<a href="<c:url value='/product/product.do'/>">게시판 목록으로 이동</a>
-
-
-				<hr />
-				<!--/row-->
-				<!--/.col-xs-12.col-sm-9-->
-
-				<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-					<div class="list-group">
-						<a class="list-group-item active"
-							href="<c:url value='/product/product.do'/>">전체 상품 보기</a>
-					</div>
-				</div>
-				<!--/.sidebar-offcanvas-->
+						<td><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></td>
+						<td><input type="submit" value='탈퇴하기'></td>
+						</table>
+					</form>
 			</div>
 		</div>
 	</div>
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/star.js"></script>
+	<script src="../js/jquery-1.12.4.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

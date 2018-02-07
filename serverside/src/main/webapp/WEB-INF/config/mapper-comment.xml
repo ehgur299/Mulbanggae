@@ -8,7 +8,7 @@
   			SELECT comment_seq.NEXTVAL cmt_num FROM DUAL
   		</selectKey>
   		INSERT INTO M_Comment(cmt_number, product_number, user_number, cmt_content, cmt_date)
-  		VALUES(#{cmt_num}, #{product_num}, #{user_num}, #{cmt_content}, SYSDATE)
+  		VALUES( #{cmt_num}, #{product_num}, #{user_num}, #{cmt_content}, SYSDATE)
   	</insert>
   	
   	<resultMap type="Comment" id="CommentResultMap">
@@ -37,10 +37,10 @@
   		DELETE FROM M_Comment WHERE cmt_number = #{cmt_num}
   	</delete>
   	
-  	<select id="selectbyProduct" parameterType="Integer" resultMap="CommentResultMap">
-  		SELECT c.cmt_number, c.cmt_content, c.cmt_date, u.user_nickname
-  		FORM M_Comment c, user_info u
-  		WHERE product_number = #{no} 
+  	<select id="selectbyProduct" parameterType="String" resultMap="CommentResultMap">
+  		SELECT c.cmt_number, c.product_number, c.user_number, c.cmt_content, c.cmt_date, u.user_nickname
+  		FROM M_Comment c,USER_INFO u 
+  		WHERE  c.user_number = u.user_number AND product_number = #{no}
   		ORDER BY cmt_number DESC
   	</select>
   </mapper>

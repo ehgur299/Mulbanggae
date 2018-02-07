@@ -52,6 +52,9 @@
 
 		<h1>상품 등록</h1>
 		<form name="frm" action="<c:url value='/product/product-modify.do'/>" method="post" enctype="multipart/form-data">
+			<c:if test="${ param.action == 'error-password' }">
+				<p>비밀번호가 일치하지 않습니다.</p>
+			</c:if>
 			<table class="table table-bordered">
 				<tr>
 					<td>작성자</td>
@@ -72,7 +75,7 @@
 				<tr>
 					<td>상품설명</td>
 					<td><textarea rows="5" cols="60" name="content"
-							id="productContent" value="${ product.content }"></textarea></td>
+							id="productContent"></textarea></td>
 				</tr>
 				<tr>
 					<td>상품이미지</td>
@@ -95,14 +98,15 @@
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="password"></td>
+					<td><input type="password" name="password" title="password"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="hidden" name="no" value="${ product.no }">
+						<input type="hidden" name="no" title="no" value="${ product.no }">
+						<input type="hidden" name="user_no" title="no" value="${ product.no }">
 						<input type="hidden" value="1" name="cid">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						<button type="submit" class="btn btn-default">등록</button>
+						<button type="submit" class="btn btn-default" >등록</button>
 						<a href="<c:url value='/product/product.do'/>" type="check" class="btn btn-default" onclick="check_onclick()">상품 목록으로 이동</a>
 					</td>
 				</tr>

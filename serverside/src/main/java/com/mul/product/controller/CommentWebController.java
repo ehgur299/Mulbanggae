@@ -65,6 +65,8 @@ public class CommentWebController
 		comment.setProduct_num(product_num);
 		comment.setCmt_content(cmt_content);
 		
+		commentService.insert(comment);
+		
 		return "redirect:/product/product-detail.do?no=" + product_num;
 	}
 	
