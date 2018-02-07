@@ -51,7 +51,7 @@
 		<hr />
 
 		<h1>상품 등록</h1>
-		<form name="frm" action="<c:url value='/product/product-new.do'/>" method="post" enctype="multipart/form-data">
+		<form name="frm" action="<c:url value='/product/product-modify.do'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-bordered">
 				<tr>
 					<td>작성자</td>
@@ -59,20 +59,20 @@
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td><input type="text" name="title" id="productTitle"></td>
+					<td><input type="text" name="title" id="productTitle" value="${ product.title }"></td>
 				</tr>
 				<tr>
 					<td>상품명</td>
-					<td><input type="text" name="name" id="productName"></td>
+					<td><input type="text" name="name" id="productName" value="${ product.name }"></td>
 				</tr>
 				<tr>
 					<td>가격</td>
-					<td><input type="number" name="price" id="productPrice"></td>
+					<td><input type="number" name="price" id="productPrice" value="${ product.price }"></td>
 				</tr>
 				<tr>
 					<td>상품설명</td>
 					<td><textarea rows="5" cols="60" name="content"
-							id="productContent"></textarea></td>
+							id="productContent" value="${ product.content }"></textarea></td>
 				</tr>
 				<tr>
 					<td>상품이미지</td>
@@ -94,8 +94,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>비밀번호</td>
+					<td><input type="password" name="password"></td>
+				</tr>
+				<tr>
 					<td colspan="2" align="center">
-						<input type="hidden" name="no" value="${ item.no }">
+						<input type="hidden" name="no" value="${ product.no }">
 						<input type="hidden" value="1" name="cid">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>

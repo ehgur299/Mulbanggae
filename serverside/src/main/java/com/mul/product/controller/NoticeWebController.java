@@ -184,6 +184,8 @@ public class NoticeWebController {
 			fileService.remove(request, UPLOAD_FOLDER, filename);
 		}
 		
+		noticeService.remove(no);
+		
 		return "redirect:/notice.do";
 	}
 	
@@ -243,6 +245,8 @@ public class NoticeWebController {
 		if (oldFilename != null && !oldFilename.trim().isEmpty()) {
 			fileService.remove(request, UPLOAD_FOLDER, oldFilename);
 		}
+		
+		noticeService.modify(notice);
 		
 		return "redirect:notice.do";
 	}

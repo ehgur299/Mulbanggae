@@ -65,7 +65,7 @@ public class CommentWebController
 		comment.setProduct_num(product_num);
 		comment.setCmt_content(cmt_content);
 		
-		return "product-detail";
+		return "redirect:/product/product-detail.do?no=" + product_num;
 	}
 	
 	@RequestMapping(value = "/comment-modify", method = RequestMethod.GET)

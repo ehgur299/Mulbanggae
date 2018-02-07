@@ -56,18 +56,8 @@ public class ProductWebController {
 		@RequestMapping(value = "/product.do", method = RequestMethod.GET)
 		public String list(Model model, HttpServletRequest req) throws CommonException {
 			
-			int currentPageNo = 1;
-			int maxPost = 10;
-			
-			if(req.getParameter("pages") != null)
-				currentPageNo = Integer.parseInt(req.getParameter("pages"));
-			
-			Paging paging = new Paging(currentPageNo, maxPost);
-			
-			int offset = (paging.getCurrentpageNo() -1) * paging.getMaxPost();
-			
-			List<Product> page = null;
-			page = productService.list(offset, paging.getMaxPost());
+			List<Product> list = null;
+			list = productService.list();
 			
 			UserInfo item = null;
 			
@@ -76,9 +66,9 @@ public class ProductWebController {
 			
 			model.addAttribute("item", item);
 			
-			logger.debug(page);
+			logger.debug(list);
 			
-			model.addAttribute("product", page);
+			model.addAttribute("product", list);
 			return "product";
 		}
 		
@@ -201,6 +191,8 @@ public class ProductWebController {
 				fileService.remove(request, UPLOAD_FOLDER, filename);
 			}
 			
+			productService.remove(no);
+			
 			return "redirect:/product.do";
 		}
 		
@@ -210,13 +202,20 @@ public class ProductWebController {
 				@RequestParam(value = "no", required = true) String no)
 						throws CommonException {
 			
-			Product item = null;
+			UserInfo item = null;
 			
-			item = productService.detail(no);
+			String id = this.getPrincipal();
+			item = userInfoService.detail(id);
 			
 			model.addAttribute("item", item);
 			
-			return "modify";
+			Product product = null;
+			
+			product = productService.detail(no);
+			
+			model.addAttribute("product", product);
+			
+			return "product-modify";
 		}
 		
 		// 글 수정 후, 글 목록 화면으로 이동
@@ -266,6 +265,8 @@ public class ProductWebController {
 			if (oldFilename != null && !oldFilename.trim().isEmpty()) {
 				fileService.remove(request, UPLOAD_FOLDER, oldFilename);
 			}
+			
+			productService.modify(product);
 			
 			return "redirect:product.do";
 		}

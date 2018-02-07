@@ -11,17 +11,6 @@
 <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 <title>물방개</title>
 </head>
-<script type="text/javascript">
-	function getSelectValue(frm){
- 		frm.m_ctg.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
-		}
-	function check_onclick(){
-		theForm=document.frm;
-		if(theForm.title.value=="" || theForm.productname.value=="" || theForm.price.value=="" || thForm.content==""){
-			alert("필수 입력란이 비었습니다. 확인해 주세요.");
-			}
-		}
-</script>
 <body>
 	<div class="container">
 		<div class="masthead">
@@ -41,7 +30,7 @@
 			</div>
 			<nav>
 				<ul class="nav nav-justified">
-					<li class="active"><a href="<c:url value='/'/>">Home</a></li>
+					<li class="active"><a href="#">Home</a></li>
 					<li><a href="<c:url value='/product/product.do'/>">상품게시판</a></li>
 					<li><a href="<c:url value='/notice/notice.do'/>">공지사항</a></li>
 				</ul>
@@ -50,56 +39,39 @@
 
 		<hr />
 
-		<h1>상품 등록</h1>
-		<form name="frm" action="<c:url value='/product/product-new.do'/>" method="post" enctype="multipart/form-data">
+		<h1>공지사항 작성</h1>
+		<form action="<c:url value='/notice/notice-modify.do'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-bordered">
+			<c:if test="${ param.action == 'error-password' }">
+				<p>비밀번호가 일치하지 않습니다.</p>
+			</c:if>
 				<tr>
 					<td>작성자</td>
 					<td>${ item.nickname }(${ item.id })</td>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td><input type="text" name="title" id="productTitle"></td>
+					<td><input type="text" name="title" id="noticeTitle"></td>
 				</tr>
 				<tr>
-					<td>상품명</td>
-					<td><input type="text" name="name" id="productName"></td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td><input type="number" name="price" id="productPrice"></td>
-				</tr>
-				<tr>
-					<td>상품설명</td>
+					<td>내용</td>
 					<td><textarea rows="5" cols="60" name="content"
-							id="productContent"></textarea></td>
+							id="noticeContent"></textarea></td>
 				</tr>
 				<tr>
-					<td>상품이미지</td>
-					<td><input type="file" name="url" id="productPhoto" multiple="multiple"></td>
+					<td>이미지</td>
+					<td><input type="file" name="url" id="noticePhoto" multiple="multiple"></td>
 				</tr>
 				<tr>
-					<td>카테고리</td>
-					<td>
-					<select name="selectBox" onChange="getSelectValue(this.form);">
-					<option value="1">의류</option>
- 					<option value="2">스포츠/레저</option>
- 					<option value="3">디지털/가전</option>
- 					<option value="4">도서/취미/애완/티켓</option>
- 					<option value="5">차량/오토바이</option>
- 					<option value="6">생활/문구/가구/식품</option>
- 					<option value="7">유아동/출산</option>
- 					<option value="8">기타</option>
-					</select>
-					</td>
+					<td>비밀번호</td>
+					<td><input type="password" name="password"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<input type="hidden" name="no" value="${ item.no }">
-						<input type="hidden" value="1" name="cid">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="submit" class="btn btn-default">등록</button>
-						<a href="<c:url value='/product/product.do'/>" type="check" class="btn btn-default" onclick="check_onclick()">상품 목록으로 이동</a>
+						<a href="<c:url value='/notice/notice.do'/>" type="button" class="btn btn-default">공지사항 목록으로 이동</a>
 					</td>
 				</tr>
 			</table>
