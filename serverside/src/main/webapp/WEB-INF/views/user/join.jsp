@@ -43,7 +43,7 @@
 					class="form-control" maxlength="30" placeholder="최대 30자" name="id">
 			</div>
 			<div class="form-group">
-				<label for="Password">Password</label> <input
+				<label for="Password">Password</label> <input type="password"
 					class="form-control" maxlength="30" placeholder="최대 30자" name="pwd">
 			</div>
 			<div class="form-group">

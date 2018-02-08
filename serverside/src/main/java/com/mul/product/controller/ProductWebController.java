@@ -100,6 +100,7 @@ public class ProductWebController {
 			
 			List<Comment> commentlist = commentService.selectbyProduct(no);
 			
+			
 			model.addAttribute("commentlist", commentlist);
 			model.addAttribute("item", product);
 			model.addAttribute("filename", filename);
@@ -197,7 +198,7 @@ public class ProductWebController {
 			if (filename != null && !filename.trim().isEmpty()) {
 				fileService.remove(request, UPLOAD_FOLDER, filename);
 			}
-			
+			System.out.println(no);
 			productService.remove(no);
 			
 			return "redirect:/product.do";
@@ -341,12 +342,6 @@ public class ProductWebController {
 		public String handleException(CommonException e) {
 			logger.debug(e.getMessage());
 			return "exception";
-		}
-
-		@ExceptionHandler(Exception.class)
-		public String handleException(Exception e) {
-			logger.debug(e.getMessage());
-			return "exception-common";
 		}
 		
 		// 현재 접속한 사용자의 nickname 리턴

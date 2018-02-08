@@ -66,32 +66,6 @@
 			<a href="<c:url value='/notice/download.do?filename=${ item.url }'/>">${ filename }</a>
 		</c:if>
 		</div>
-		
-		<hr />
-		
-		<textarea id="commentParentText" class="form-control col-lg-12" style="width: 100%" rows="4"></textarea>
-						</span></td>
-					</tr>
-				</table>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<td><span style='float: right'>
-									<button type="button" id="write" class="btn btn-default">확인</button>
-							</span></td>
-						</tr>
-					</thead>
-				</table>
-				
-		<div class="text-center">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
-		</div>
 	</div>
 </body>
 </html>

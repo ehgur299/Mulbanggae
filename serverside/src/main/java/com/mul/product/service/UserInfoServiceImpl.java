@@ -102,8 +102,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		 *  해당 사용자의 비밀번호를 가져온다.
 		 */
 		Product product = productDao.select(no.toString());
-		UserInfo userInfo = userInfoDao.select(product.getNo().toString());
-		
+		UserInfo userInfo = userInfoDao.select(product.getUser_num().toString());
 		// 해당 사용자의 비밀번호와 입력한 비밀번호 비교한 결과 리턴
 		return encoder.matches(rawPassword, userInfo.getPwd());
 	}

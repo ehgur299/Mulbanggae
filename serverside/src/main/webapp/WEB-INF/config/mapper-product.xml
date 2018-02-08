@@ -31,7 +31,7 @@
 
 	<select id="select" parameterType="String" resultMap="productResultMap">
 		SELECT p.product_number, p.product_title, p.product_name, p.product_price,
-		p.product_content, p.product_url, p.product_date, u.user_nickname
+		p.product_content, p.product_url, p.product_date, u.user_nickname, p.user_number
 		FROM M_Product p, user_info u
 		WHERE p.user_number = u.user_number AND product_number = #{no}
 	</select>

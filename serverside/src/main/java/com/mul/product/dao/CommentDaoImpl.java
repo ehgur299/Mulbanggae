@@ -68,7 +68,7 @@ public class CommentDaoImpl implements CommentDao {
 	{
 		List<Comment> list = null;
 		
-		list = sqlSession.selectList(MAPPER_NAMESPACE + ".selectbyProduct",Integer.parseInt(no));
+		list = sqlSession.selectList(MAPPER_NAMESPACE + ".selectbyProduct",no);
 		
 		return list;
 	}

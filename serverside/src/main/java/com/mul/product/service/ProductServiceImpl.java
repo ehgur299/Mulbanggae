@@ -49,9 +49,10 @@ public class ProductServiceImpl implements ProductService {
 		 * 파라미터의 notice 객체는 이미 수정된 정보를 담고있다.
 		 * 따라서 기존 데이터베이스에서 글번호로 기존 데이터를 불러온다.
 		 */
-		Product item = dao.select(Integer.toString(product.getNo()));
+		Product item = dao.select(product.getNo().toString());
+		
 		String oldFilename = item.getUrl();
-		dao.update(product);
+		dao.update(item);
 		
 		return oldFilename;
 	}
@@ -60,7 +61,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String remove(String no) throws CommonException {
 		Product item = dao.select(no);
-		String filename = item.getUrl();
+		String filename = null;
+		System.out.println(item.getUrl());
+		System.out.println(item.getUrl().isEmpty());
+		if(item.getUrl().isEmpty()){
+		filename = item.getUrl();
+		}
 		dao.delete(no);
 		
 		return filename;
