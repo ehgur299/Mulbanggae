@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		Product item = dao.select(product.getNo().toString());
 		
 		String oldFilename = item.getUrl();
-		dao.update(item);
+		dao.update(product);
 		
 		return oldFilename;
 	}
@@ -62,10 +62,8 @@ public class ProductServiceImpl implements ProductService {
 	public String remove(String no) throws CommonException {
 		Product item = dao.select(no);
 		String filename = null;
-		System.out.println(item.getUrl());
-		System.out.println(item.getUrl().isEmpty());
-		if(item.getUrl().isEmpty()){
-		filename = item.getUrl();
+		if(item.getUrl() != null && item.getUrl().isEmpty()){
+			filename = item.getUrl();
 		}
 		dao.delete(no);
 		

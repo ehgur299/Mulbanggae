@@ -193,15 +193,14 @@ public class ProductWebController {
 			if (!isMatched) {
 				return "redirect:/product/product-remove.do?no=" + no + "&action=error-password";
 			}
-			
+			System.out.println(productService.detail(no).toString());
 			String filename = productService.remove(no);
 			if (filename != null && !filename.trim().isEmpty()) {
 				fileService.remove(request, UPLOAD_FOLDER, filename);
 			}
 			System.out.println(no);
-			productService.remove(no);
 			
-			return "redirect:/product.do";
+			return "redirect:product.do";
 		}
 		
 		// 글 수정하기 화면
@@ -271,7 +270,7 @@ public class ProductWebController {
 			
 			String oldFilename = productService.modify(product);
 			if (oldFilename != null && !oldFilename.trim().isEmpty()) {
-				fileService.remove(request, UPLOAD_FOLDER, oldFilename);
+				/*fileService.remove(request, UPLOAD_FOLDER, oldFilename);*/
 			}
 			
 			productService.modify(product);
